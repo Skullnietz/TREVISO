@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentaci&oacute;n - Espacio Treviso</title>
+<style>
+  :root {
+    --azul: #0F1934;
+    --verde: #00BB2D;
+    --celeste: #2fa5d9;
+    --gris-bg: #f4f5f7;
+    --gris-borde: #e0e3e8;
+    --rojo: #c0392b;
+    --naranja: #e67e22;
+    --sidebar-w: 280px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, Arial, sans-serif; background: var(--gris-bg); color: #222; line-height: 1.6; }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh;
+    background: var(--azul); color: #fff; overflow-y: auto; z-index: 100;
+    padding: 20px 0;
+  }
+  .sidebar h2 { font-size: 15px; padding: 0 18px 12px; border-bottom: 1px solid rgba(255,255,255,.15); margin-bottom: 8px; }
+  .sidebar a {
+    display: block; padding: 7px 18px; color: rgba(255,255,255,.8); text-decoration: none;
+    font-size: 13px; transition: .2s;
+  }
+  .sidebar a:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .sidebar a.active { background: var(--verde); color: #fff; font-weight: 600; }
+  .sidebar .section-title {
+    padding: 12px 18px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+    color: rgba(255,255,255,.45); font-weight: 700;
+  }
+
+  /* MAIN */
+  .main { margin-left: var(--sidebar-w); padding: 30px 40px 60px; max-width: 1100px; }
+
+  h1 { font-size: 28px; color: var(--azul); margin-bottom: 6px; }
+  h2 { font-size: 22px; color: var(--azul); margin: 36px 0 14px; padding-bottom: 6px; border-bottom: 2px solid var(--verde); }
+  h3 { font-size: 17px; color: var(--azul); margin: 22px 0 8px; }
+  h4 { font-size: 14px; color: #555; margin: 14px 0 6px; }
+  p { margin-bottom: 10px; }
+  .subtitle { color: #666; font-size: 14px; margin-bottom: 24px; }
+
+  /* CARDS */
+  .card {
+    background: #fff; border: 1px solid var(--gris-borde); border-radius: 10px;
+    padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  }
+  .card h3 { margin-top: 0; }
+
+  /* TAGS */
+  .tag {
+    display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px;
+    font-weight: 600; margin-right: 4px; margin-bottom: 4px;
+  }
+  .tag-php { background: #e8daef; color: #6c3483; }
+  .tag-js { background: #fdebd0; color: #b9770e; }
+  .tag-css { background: #d4efdf; color: #1e8449; }
+  .tag-db { background: #d6eaf8; color: #2471a3; }
+  .tag-security { background: #fadbd8; color: #c0392b; }
+  .tag-module { background: #dfe6e9; color: #2d3436; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: 13px; }
+  th { background: var(--azul); color: #fff; padding: 8px 10px; text-align: left; font-size: 12px; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--gris-borde); vertical-align: top; }
+  tr:hover td { background: #f0f5ff; }
+
+  /* TREE */
+  .tree { font-family: Consolas, monospace; font-size: 13px; background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px; overflow-x: auto; line-height: 1.5; margin: 12px 0; }
+  .tree .folder { color: #89b4fa; font-weight: 700; }
+  .tree .file { color: #a6e3a1; }
+  .tree .lib { color: #6c7086; }
+
+  /* DIAGRAM */
+  .diagram {
+    background: #fff; border: 1px solid var(--gris-borde); border-radius: 10px;
+    padding: 20px; margin: 16px 0; overflow-x: auto;
+  }
+  .diagram svg { max-width: 100%; }
+
+  /* FLOW */
+  .flow-box {
+    display: inline-block; padding: 10px 16px; border-radius: 8px; margin: 4px;
+    font-size: 13px; font-weight: 600; text-align: center; min-width: 120px;
+  }
+  .flow-arrow { display: inline-block; font-size: 20px; color: #999; margin: 0 4px; vertical-align: middle; }
+  .flow-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+
+  .fb-blue { background: #d6eaf8; color: #1a5276; border: 1px solid #aed6f1; }
+  .fb-green { background: #d5f5e3; color: #196f3d; border: 1px solid #a9dfbf; }
+  .fb-orange { background: #fdebd0; color: #935116; border: 1px solid #f5cba7; }
+  .fb-red { background: #fadbd8; color: #922b21; border: 1px solid #f5b7b1; }
+  .fb-purple { background: #e8daef; color: #6c3483; border: 1px solid #d2b4de; }
+  .fb-gray { background: #eaecee; color: #2c3e50; border: 1px solid #d5d8dc; }
+
+  /* ALERT */
+  .alert {
+    padding: 12px 16px; border-radius: 8px; margin: 12px 0; font-size: 13px;
+  }
+  .alert-warn { background: #fff3cd; border-left: 4px solid var(--naranja); color: #856404; }
+  .alert-danger { background: #f8d7da; border-left: 4px solid var(--rojo); color: #721c24; }
+  .alert-info { background: #d1ecf1; border-left: 4px solid var(--celeste); color: #0c5460; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .sidebar { width: 100%; height: auto; position: relative; }
+    .main { margin-left: 0; padding: 20px; }
+  }
+
+  .module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .dep-list { list-style: none; padding: 0; }
+  .dep-list li { padding: 3px 0; font-size: 13px; }
+  .dep-list li::before { content: "\2192"; margin-right: 6px; color: var(--verde); }
+  code { background: #eef; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+  .mono { font-family: Consolas, monospace; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <h2>Espacio Treviso</h2>
+  <div class="section-title">General</div>
+  <a href="#overview">Resumen del proyecto</a>
+  <a href="#tech-stack">Stack tecnol&oacute;gico</a>
+  <a href="#architecture">Arquitectura general</a>
+  <a href="#file-tree">Estructura de archivos</a>
+
+  <div class="section-title">M&oacute;dulos</div>
+  <a href="#mod-auth">Autenticaci&oacute;n y sesi&oacute;n</a>
+  <a href="#mod-xml">Gesti&oacute;n de XML/CFDI</a>
+  <a href="#mod-operations">Operaciones financieras</a>
+  <a href="#mod-accounting">Contabilizaci&oacute;n</a>
+  <a href="#mod-reports">Reportes</a>
+  <a href="#mod-clients">Clientes y colaboradores</a>
+  <a href="#mod-notifications">Notificaciones</a>
+  <a href="#mod-sync">Sincronizaci&oacute;n XML</a>
+  <a href="#mod-admin">Administraci&oacute;n</a>
+
+  <div class="section-title">Base de datos</div>
+  <a href="#db-schema">Esquema de tablas</a>
+  <a href="#db-relations">Relaciones</a>
+
+  <div class="section-title">Reingenier&iacute;a</div>
+  <a href="#security">Problemas de seguridad</a>
+  <a href="#tech-debt">Deuda t&eacute;cnica</a>
+  <a href="#recommendations">Recomendaciones</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ===== OVERVIEW ===== -->
+<h1 id="overview">Espacio Treviso</h1>
+<p class="subtitle">Documentaci&oacute;n de arquitectura y m&oacute;dulos &mdash; Base para reingenier&iacute;a</p>
+
+<div class="card">
+  <h3>Descripci&oacute;n del sistema</h3>
+  <p><strong>Espacio Treviso</strong> es un sistema web de administraci&oacute;n de archivos XML fiscales (CFDI) del SAT mexicano. Permite a una firma contable gestionar facturas electr&oacute;nicas de sus clientes, controlar dep&oacute;sitos, reembolsos, complementos de pago, notas de cr&eacute;dito y generar reportes contables.</p>
+  <p>El sistema opera con dos roles principales: <strong>Administrador</strong> (root) y <strong>Colaborador</strong> (empleado), cada uno con su propio panel y nivel de acceso.</p>
+</div>
+
+<div class="card">
+  <h3>Datos generales</h3>
+  <table>
+    <tr><td><strong>Nombre</strong></td><td>Espacio Treviso (Sistema de administraci&oacute;n de XML's)</td></tr>
+    <tr><td><strong>Base de datos</strong></td><td>MySQL &mdash; <code>treviso_espacio</code></td></tr>
+    <tr><td><strong>Servidor</strong></td><td>Windows (rutas E:\XML\, C:\TrevisoLogs\)</td></tr>
+    <tr><td><strong>Archivos fuente</strong></td><td>~170 archivos PHP, JS, CSS (sin contar library)</td></tr>
+    <tr><td><strong>Roles</strong></td><td>Admin (IDRol=1), Colaborador (IDRol=2)</td></tr>
+    <tr><td><strong>Patr&oacute;n</strong></td><td>PHP procedural con AJAX (jQuery)</td></tr>
+  </table>
+</div>
+
+<!-- ===== TECH STACK ===== -->
+<h2 id="tech-stack">Stack tecnol&oacute;gico</h2>
+<div class="card">
+  <p><span class="tag tag-php">PHP (procedural)</span> <span class="tag tag-js">jQuery 2.x</span> <span class="tag tag-css">CSS plano</span> <span class="tag tag-db">MySQL / MySQLi</span> <span class="tag tag-module">DataTables</span> <span class="tag tag-module">PHPExcel</span></p>
+  <table>
+    <tr><th>Componente</th><th>Tecnolog&iacute;a</th><th>Versi&oacute;n estimada</th><th>Notas</th></tr>
+    <tr><td>Backend</td><td>PHP</td><td>7.x+</td><td>Procedural, sin framework</td></tr>
+    <tr><td>Base de datos</td><td>MySQL</td><td>5.7+</td><td>Conexi&oacute;n v&iacute;a MySQLi</td></tr>
+    <tr><td>Frontend JS</td><td>jQuery</td><td>2.x</td><td>Manipulaci&oacute;n DOM y AJAX</td></tr>
+    <tr><td>Tablas interactivas</td><td>DataTables</td><td>1.x</td><td>Paginaci&oacute;n y ordenamiento</td></tr>
+    <tr><td>Excel export</td><td>PHPExcel</td><td>Legacy</td><td>Deprecada (reemplazada por PhpSpreadsheet)</td></tr>
+    <tr><td>XML parsing</td><td>SimpleXML + XPath</td><td>Nativa</td><td>Procesamiento de CFDI</td></tr>
+    <tr><td>CSS</td><td>Custom</td><td>-</td><td>Sin framework CSS, estilos inline y archivos .css</td></tr>
+  </table>
+</div>
+
+<!-- ===== ARCHITECTURE ===== -->
+<h2 id="architecture">Arquitectura general</h2>
+
+<div class="card">
+  <h3>Diagrama de capas</h3>
+  <div class="flow-row" style="justify-content: center;">
+    <div class="flow-box fb-blue" style="width:100%; max-width:700px; padding: 14px;">
+      <strong>CAPA DE PRESENTACI&Oacute;N</strong><br>
+      <span style="font-size:12px;">Vistas PHP con HTML embebido + jQuery AJAX + DataTables + CSS</span>
+    </div>
+  </div>
+  <div style="text-align:center; font-size:20px; color:#999;">&darr;</div>
+  <div class="flow-row" style="justify-content: center;">
+    <div class="flow-box fb-green" style="width:100%; max-width:700px; padding: 14px;">
+      <strong>CAPA DE L&Oacute;GICA DE NEGOCIO</strong><br>
+      <span style="font-size:12px;">Archivos <code>transaction*.php</code> &mdash; Procesamiento, validaci&oacute;n, queries SQL directas</span>
+    </div>
+  </div>
+  <div style="text-align:center; font-size:20px; color:#999;">&darr;</div>
+  <div class="flow-row" style="justify-content: center;">
+    <div class="flow-box fb-purple" style="width:100%; max-width:700px; padding: 14px;">
+      <strong>CAPA DE DATOS</strong><br>
+      <span style="font-size:12px;"><code>bd.php</code> &rarr; MySQLi conexi&oacute;n directa &rarr; BD <code>treviso_espacio</code></span>
+    </div>
+  </div>
+  <div style="text-align:center; font-size:20px; color:#999;">&darr;</div>
+  <div class="flow-row" style="justify-content: center;">
+    <div class="flow-box fb-orange" style="width:100%; max-width:700px; padding: 14px;">
+      <strong>SISTEMA DE ARCHIVOS</strong><br>
+      <span style="font-size:12px;">Carpetas XML en <code>E:\XML\</code> + Logs en <code>C:\TrevisoLogs\</code></span>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Flujo de autenticaci&oacute;n y navegaci&oacute;n</h3>
+  <div class="flow-row">
+    <div class="flow-box fb-gray">login.php</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box fb-green">transactionValLogin.php</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box fb-blue">Rol = 1?</div>
+  </div>
+  <div class="flow-row" style="margin-left: 40px;">
+    <span class="flow-arrow">&darr; S&iacute;</span>
+    <div class="flow-box fb-purple">root/index.php</div>
+    <span style="margin: 0 30px; color: #999;">|</span>
+    <span class="flow-arrow">&darr; No</span>
+    <div class="flow-box fb-orange">colaborador/index.php</div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Patr&oacute;n de comunicaci&oacute;n</h3>
+  <p>El sistema usa un patr&oacute;n h&iacute;brido:</p>
+  <table>
+    <tr><th>Patr&oacute;n</th><th>Uso</th><th>Ejemplo</th></tr>
+    <tr><td>POST form &rarr; redirect</td><td>Login, altas, ediciones</td><td><code>transactionAltaCliente.php</code></td></tr>
+    <tr><td>AJAX GET/POST &rarr; HTML</td><td>B&uacute;squedas, detalles, reportes</td><td><code>transactionObtenerReporte.php</code></td></tr>
+    <tr><td>AJAX POST &rarr; JSON</td><td>Sync XML, estado</td><td><code>run_sync.php</code>, <code>sync_status.php</code></td></tr>
+    <tr><td>NDJSON streaming</td><td>Proceso XML largo</td><td><code>proceso_xml.php</code></td></tr>
+  </table>
+</div>
+
+<!-- ===== FILE TREE ===== -->
+<h2 id="file-tree">Estructura de archivos</h2>
+<div class="tree">
+<span class="folder">EspacioTrevisoLocal/</span>
+├── index.html                     <span style="color:#6c7086;">← Redirige a login.php</span>
+├── login.php                      <span style="color:#6c7086;">← P&aacute;gina de inicio de sesi&oacute;n</span>
+├── php_errors.log
+│
+├── <span class="folder">transactions/</span>              <span style="color:#6c7086;">← L&oacute;gica global (login, BD, XML)</span>
+│   ├── <span class="file">bd.php</span>                 <span style="color:#6c7086;">← Conexi&oacute;n a MySQL</span>
+│   ├── <span class="file">transactionValLogin.php</span> <span style="color:#6c7086;">← Validaci&oacute;n de login</span>
+│   ├── <span class="file">transactionLogout.php</span>
+│   ├── <span class="file">proceso_xml.php</span>         <span style="color:#6c7086;">← Escaneo y carga de XML (NDJSON)</span>
+│   └── <span class="folder">automation/</span>
+│       └── <span class="file">sync_xml_global.php</span> <span style="color:#6c7086;">← Tarea programada de sync</span>
+│
+├── <span class="folder">root/</span>                      <span style="color:#6c7086;">← Panel de ADMINISTRADOR</span>
+│   ├── <span class="file">index.php</span>              <span style="color:#6c7086;">← Dashboard admin con slides</span>
+│   ├── <span class="file">clientes.php</span>           <span style="color:#6c7086;">← CRUD clientes</span>
+│   ├── <span class="file">colaboradores.php</span>      <span style="color:#6c7086;">← CRUD colaboradores</span>
+│   ├── <span class="file">cfdisCliente.php</span>       <span style="color:#6c7086;">← Explorador de CFDIs</span>
+│   ├── <span class="file">depositosCliente.php</span>   <span style="color:#6c7086;">← Gesti&oacute;n de dep&oacute;sitos</span>
+│   ├── <span class="file">reembolsosCliente.php</span>  <span style="color:#6c7086;">← Gesti&oacute;n de reembolsos</span>
+│   ├── <span class="file">complementospago.php</span>   <span style="color:#6c7086;">← Complementos de pago</span>
+│   ├── <span class="file">notascredito.php</span>       <span style="color:#6c7086;">← Notas de cr&eacute;dito</span>
+│   ├── <span class="file">contaDepositos.php</span>     <span style="color:#6c7086;">← Contabilizar dep&oacute;sitos</span>
+│   ├── <span class="file">contaReembolso.php</span>     <span style="color:#6c7086;">← Contabilizar reembolsos</span>
+│   ├── <span class="file">contaMasivo.php</span>        <span style="color:#6c7086;">← Contabilizaci&oacute;n masiva</span>
+│   ├── <span class="file">contaNCFDI.php / contaDPNCFDI.php / contaRNCFDI.php</span>
+│   ├── <span class="file">reportesEmpleado.php</span>   <span style="color:#6c7086;">← Reportes operados/sin operar</span>
+│   ├── <span class="file">reportesDepositosEmpleado.php / reportesReembolsosEmpleado.php</span>
+│   ├── <span class="file">reportesLogs.php</span>       <span style="color:#6c7086;">← Reportes de changelog</span>
+│   ├── <span class="file">historico.php</span>          <span style="color:#6c7086;">← Historial de solicitudes</span>
+│   ├── <span class="file">atenderSolicitud.php</span>   <span style="color:#6c7086;">← Atender solicitudes de edici&oacute;n</span>
+│   ├── <span class="file">noticias.php</span>           <span style="color:#6c7086;">← CMS de slides/noticias</span>
+│   ├── <span class="file">configNCFDI.php</span>        <span style="color:#6c7086;">← Operaciones sin CFDI</span>
+│   ├── <span class="file">formaPago.php</span>          <span style="color:#6c7086;">← Cat&aacute;logo m&eacute;todos de pago</span>
+│   ├── <span class="file">backup.php</span>             <span style="color:#6c7086;">← Respaldo de BD</span>
+│   ├── <span class="folder">templates/</span> headers.php, footer.php
+│   ├── <span class="folder">transactions/</span> ~50 archivos transaction*.php
+│   ├── <span class="folder">css/</span> estilos.css
+│   └── <span class="folder">js/</span> funciones.js
+│
+├── <span class="folder">colaborador/</span>               <span style="color:#6c7086;">← Panel de EMPLEADO</span>
+│   ├── <span class="file">index.php</span>              <span style="color:#6c7086;">← Dashboard empleado + sync UI</span>
+│   ├── <span class="file">cfdisCliente.php</span>       <span style="color:#6c7086;">← Explorador (filtrado por empleado)</span>
+│   ├── <span class="file">depositosCliente.php / reembolsosCliente.php</span>
+│   ├── <span class="file">complementospago.php / notascredito.php</span>
+│   ├── <span class="file">contaDepositos.php / contaReembolso.php / contaMasivo.php</span>
+│   ├── <span class="file">reportes*.php</span>          <span style="color:#6c7086;">← Reportes (scoped por empleado)</span>
+│   ├── <span class="file">historico.php / atenderSolicitud*.php</span>
+│   ├── <span class="file">configuracionEmpleado.php</span>
+│   ├── <span class="file">run_sync.php / sync_status.php / sync_reset.php</span>
+│   ├── <span class="folder">templates/</span> headers.php, footer.php
+│   ├── <span class="folder">transactions/</span> ~40 archivos
+│   └── <span class="folder">css/ js/ img/</span>
+│
+├── <span class="folder">templates/</span> footer.php     <span style="color:#6c7086;">← Footer global</span>
+├── <span class="folder">css/</span> estilos.css           <span style="color:#6c7086;">← CSS global del login</span>
+├── <span class="folder">js/</span> funciones.js, jquery.js
+├── <span class="folder">img/</span>                       <span style="color:#6c7086;">← Im&aacute;genes del sistema</span>
+├── <span class="folder">datatables/</span>                <span style="color:#6c7086;">← Plugin DataTables</span>
+└── <span class="folder">library/</span> PHPExcel/          <span style="color:#6c7086;">← Librer&iacute;a Excel (legacy)</span>
+</div>
+
+<!-- ===== MODULES ===== -->
+<h2 id="mod-auth">M&oacute;dulo 1: Autenticaci&oacute;n y sesi&oacute;n</h2>
+<div class="card">
+  <h3>Prop&oacute;sito</h3>
+  <p>Controla el acceso al sistema mediante login con usuario/contrase&ntilde;a, validaci&oacute;n de rol y redirecci&oacute;n al panel correspondiente. Manejo de sesi&oacute;n PHP nativa.</p>
+
+  <h4>Archivos involucrados</h4>
+  <table>
+    <tr><th>Archivo</th><th>Funci&oacute;n</th></tr>
+    <tr><td><code>login.php</code></td><td>Formulario de login (vista)</td></tr>
+    <tr><td><code>transactions/transactionValLogin.php</code></td><td>Validaci&oacute;n de credenciales y creaci&oacute;n de sesi&oacute;n</td></tr>
+    <tr><td><code>transactions/transactionLogout.php</code></td><td>Destrucci&oacute;n de sesi&oacute;n</td></tr>
+    <tr><td><code>transactions/bd.php</code></td><td>Conexi&oacute;n a base de datos</td></tr>
+  </table>
+
+  <h4>Variables de sesi&oacute;n</h4>
+  <table>
+    <tr><th>Variable</th><th>Contenido</th><th>Uso</th></tr>
+    <tr><td><code>IDEmpleado_Treviso_XML</code></td><td>ID del empleado</td><td>Filtrar datos por empleado</td></tr>
+    <tr><td><code>IDUsuarioEmpleado_Treviso_XML</code></td><td>ID del usuario</td><td>Identificaci&oacute;n &uacute;nica</td></tr>
+    <tr><td><code>RolEmpleado_Treviso_XML</code></td><td>1 = Admin, 2 = Colaborador</td><td>Control de acceso</td></tr>
+    <tr><td><code>NombreEmpleado_Treviso_XML</code></td><td>Nombre completo</td><td>Display en UI</td></tr>
+    <tr><td><code>RutaCarpetaEmpleado_Treviso_XML</code></td><td>Ruta del empleado en servidor</td><td>Acceso a carpetas XML</td></tr>
+  </table>
+
+  <h4>Tablas DB</h4>
+  <p><code>usuarioempleado</code> (credenciales), <code>empleado</code> (datos personales)</p>
+
+  <div class="alert alert-danger">
+    <strong>Problema cr&iacute;tico:</strong> Contrase&ntilde;as almacenadas en texto plano. Queries con interpolaci&oacute;n directa de strings (SQL injection). Sin CSRF en login.
+  </div>
+</div>
+
+<!-- MODULE 2: XML -->
+<h2 id="mod-xml">M&oacute;dulo 2: Gesti&oacute;n de XML / CFDI</h2>
+<div class="card">
+  <h3>Prop&oacute;sito</h3>
+  <p>N&uacute;cleo del sistema. Gestiona la importaci&oacute;n, b&uacute;squeda, clasificaci&oacute;n y operaci&oacute;n de archivos XML fiscales (CFDI 3.3/4.0 del SAT). Clasifica XMLs como ingresos, egresos, n&oacute;mina u otros; y los separa en facturas regulares, complementos de pago y notas de cr&eacute;dito.</p>
+
+  <h4>Archivos principales</h4>
+  <table>
+    <tr><th>Archivo</th><th>Funci&oacute;n</th></tr>
+    <tr><td><code>transactions/proceso_xml.php</code></td><td>Escaneo recursivo de carpetas + carga de XML a BD (NDJSON streaming)</td></tr>
+    <tr><td><code>transactions/automation/sync_xml_global.php</code></td><td>Tarea programada global de sincronizaci&oacute;n</td></tr>
+    <tr><td><code>root/cfdisCliente.php</code></td><td>Explorador/buscador de CFDIs (admin)</td></tr>
+    <tr><td><code>colaborador/cfdisCliente.php</code></td><td>Explorador de CFDIs (empleado, filtrado)</td></tr>
+    <tr><td><code>*/transactions/buscarCFDIPlus.php</code></td><td>B&uacute;squeda avanzada de XML</td></tr>
+    <tr><td><code>*/transactions/verHistorialXML.php</code></td><td>Ver historial de operaciones de un XML</td></tr>
+  </table>
+
+  <h4>Flujo de importaci&oacute;n XML</h4>
+  <div class="flow-row">
+    <div class="flow-box fb-orange">Carpeta E:\XML\</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box fb-green">proceso_xml.php</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box fb-blue">SimpleXML parse</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box fb-purple">Clasificar tipo</div>
+  </div>
+  <div class="flow-row" style="margin-left: 40px;">
+    <span class="flow-arrow">&darr;</span>
+    <div class="flow-box fb-gray">COMPLEMENTO &rarr; tabla <code>complementopago</code></div>
+  </div>
+  <div class="flow-row" style="margin-left: 40px;">
+    <span class="flow-arrow">&darr;</span>
+    <div class="flow-box fb-gray">CREDITO &rarr; tabla <code>notacredito</code></div>
+  </div>
+  <div class="flow-row" style="margin-left: 40px;">
+    <span class="flow-arrow">&darr;</span>
+    <div class="flow-box fb-gray">Otro &rarr; tabla <code>xml</code> (tipo: i/e/n/o)</div>
+  </div>
+
+  <h4>Tablas DB</h4>
+  <p><code>xml</code>, <code>complementopago</code>, <code>notacredito</code>, <code>historialxml</code></p>
+
+  <h4>Campos clave extra&iacute;dos del CFDI</h4>
+  <p>UUID, Serie, Folio, Emisor, Receptor, Fecha, Moneda, Total, M&eacute;todo/Forma de Pago, Tipo de Cambio</p>
+</div>
+
+<!-- MODULE 3: OPERATIONS -->
+<h2 id="mod-operations">M&oacute;dulo 3: Operaciones financieras</h2>
+<div class="card">
+  <h3>Prop&oacute;sito</h3>
+  <p>Gestiona las operaciones bancarias sobre los XMLs: dep&oacute;sitos, reembolsos, marcado de operaciones y solicitudes de edici&oacute;n.</p>
+
+  <h4>Sub-m&oacute;dulos</h4>
+  <div class="module-grid">
+    <div class="card" style="margin:0;">
+      <h4>Dep&oacute;sitos</h4>
+      <p>Marcar facturas para dep&oacute;sito bancario. Asignar m&eacute;todo de pago, banco, cuenta.</p>
+      <p><strong>Vista:</strong> <code>depositosCliente.php</code><br>
+      <strong>Transacciones:</strong> <code>transactionMarcarDeposito.php</code>, <code>verDetalleDeposito.php</code><br>
+      <strong>Tabla:</strong> <code>depositoscliente</code>, <code>historialxml</code></p>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>Reembolsos</h4>
+      <p>Gestionar devoluciones sobre facturas de egreso/n&oacute;mina.</p>
+      <p><strong>Vista:</strong> <code>reembolsosCliente.php</code><br>
+      <strong>Transacciones:</strong> <code>transactionMarcarReembolso.php</code>, <code>verDetalleReembolso.php</code><br>
+      <strong>Tabla:</strong> <code>reembolsoscliente</code>, <code>historialxml</code></p>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>Complementos de pago</h4>
+      <p>Consultar complementos CFDI asociados a facturas.</p>
+      <p><strong>Vista:</strong> <code>complementospago.php</code><br>
+      <strong>Transacci&oacute;n:</strong> <code>recuperaComplementosPago.php</code><br>
+      <strong>Tabla:</strong> <code>complementopago</code></p>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>Notas de cr&eacute;dito</h4>
+      <p>Consultar y saldar notas de cr&eacute;dito fiscales.</p>
+      <p><strong>Vista:</strong> <code>notascredito.php</code><br>
+      <strong>Transacciones:</strong> <code>recuperaNotas.php</code>, <code>transactionSaldarNotaCredito.php</code><br>
+      <strong>Tabla:</strong> <code>notacredito</code></p>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>Operaciones sin CFDI</h4>
+      <p>Registrar operaciones que no tienen comprobante XML asociado.</p>
+      <p><strong>Vista:</strong> <code>configNCFDI.php</code><br>
+      <strong>Tablas:</strong> <code>operacionn</code>, <code>operacionescliente</code>, <code>depositosclientencfdi</code>, <code>reembolsosclientencfdi</code></p>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>Solicitudes de edici&oacute;n</h4>
+      <p>Gestionar peticiones de modificaci&oacute;n de hist&oacute;ricos ya registrados.</p>
+      <p><strong>Vista:</strong> <code>atenderSolicitud.php</code>, <code>historico.php</code><br>
+      <strong>Tabla:</strong> <code>solicitudedicion</code>, <code>solicitudedicionobjeto</code></p>
+    </div>
+  </div>
+
+  <h4>M&eacute;todos de pago clave</h4>
+  <table>
+    <tr><th>ID</th><th>Tipo</th><th>Uso en sistema</th></tr>
+    <tr><td>1</td><td>Transferencia</td><td>Dep&oacute;sitos</td></tr>
+    <tr><td>4</td><td>Tarjeta</td><td>Dep&oacute;sitos</td></tr>
+    <tr><td>28</td><td>Tarjeta d&eacute;bito</td><td>Dep&oacute;sitos</td></tr>
+    <tr><td>100</td><td>Especial</td><td>Reembolsos</td></tr>
+  </table>
+</div>
+
+<!-- MODULE 4: ACCOUNTING -->
+<h2 id="mod-accounting">M&oacute;dulo 4: Contabilizaci&oacute;n</h2>
+<div class="card">
+  <h3>Prop&oacute;sito</h3>
+  <p>Marcar facturas, dep&oacute;sitos, reembolsos y operaciones como "contabilizados" para control del flujo contable. Opera en dos niveles: hist&oacute;rico individual y XML global.</p>
+
+  <h4>Archivos</h4>
+  <table>
+    <tr><th>Archivo</th><th>Funci&oacute;n</th></tr>
+    <tr><td><code>contaDepositos.php</code></td><td>Contabilizar dep&oacute;sitos</td></tr>
+    <tr><td><code>contaReembolso.php</code></td><td>Contabilizar reembolsos</td></tr>
+    <tr><td><code>contaMasivo.php</code></td><td>Contabilizaci&oacute;n masiva de XMLs</td></tr>
+    <tr><td><code>contaNCFDI.php</code></td><td>Contabilizar operaciones sin CFDI</td></tr>
+    <tr><td><code>contaDPNCFDI.php</code></td><td>Contabilizar dep&oacute;sitos sin CFDI</td></tr>
+    <tr><td><code>contaRNCFDI.php</code></td><td>Contabilizar reembolsos sin CFDI</td></tr>
+    <tr><td><code>transactionContabilizarXML.php</code></td><td>L&oacute;gica: marcar como contabilizado</td></tr>
+    <tr><td><code>transactionContabilizarNCFDI.php</code></td><td>L&oacute;gica: contabilizar sin CFDI</td></tr>
+    <tr><td><code>transactionSaldarContabilizarCFDI.php</code></td><td>Saldar y contabilizar simult&aacute;neo</td></tr>
+  </table>
+
+  <h4>L&oacute;gica de contabilizaci&oacute;n</h4>
+  <div class="flow-row">
+    <div class="flow-box fb-blue">historialxml.ContabilizadoHistorico = 'S'</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box fb-green">Verificar: &iquest;todos los hist&oacute;ricos del XML contabilizados?</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box fb-purple">xml.ContabilizadoXML = 'S'</div>
+  </div>
+</div>
+
+<!-- MODULE 5: REPORTS -->
+<h2 id="mod-reports">M&oacute;dulo 5: Reportes</h2>
+<div class="card">
+  <h3>Prop&oacute;sito</h3>
+  <p>Generaci&oacute;n de reportes tabulares con filtros avanzados, visualizaci&oacute;n en DataTables y exportaci&oacute;n a Excel (PHPExcel).</p>
+
+  <h4>Tipos de reporte</h4>
+  <table>
+    <tr><th>Reporte</th><th>Vista</th><th>Transacci&oacute;n</th></tr>
+    <tr><td>Operados / Sin operar</td><td><code>reportesEmpleado.php</code></td><td><code>transactionObtenerReporte.php</code></td></tr>
+    <tr><td>Dep&oacute;sitos</td><td><code>reportesDepositosEmpleado.php</code></td><td><code>transactionObtenerReporteDeposito.php</code></td></tr>
+    <tr><td>Reembolsos</td><td><code>reportesReembolsosEmpleado.php</code></td><td><code>transactionObtenerReporteReembolso.php</code></td></tr>
+    <tr><td>Contabilizaci&oacute;n dep&oacute;sitos</td><td><code>reportesDepositosEmpleado.php</code></td><td><code>transactionObtenerReporteDepositoConta.php</code></td></tr>
+    <tr><td>Contabilizaci&oacute;n reembolsos</td><td>-</td><td><code>transactionObtenerReporteReembolsoConta.php</code></td></tr>
+    <tr><td>Dep&oacute;sitos sin CFDI</td><td><code>reportesDepositosNCFDI.php</code></td><td><code>transactionObtenerReporteDepositoNCFDI.php</code></td></tr>
+    <tr><td>Reembolsos sin CFDI</td><td><code>reportesReembolsosNCFDI.php</code></td><td><code>transactionObtenerReporteReembolsoNCFDI.php</code></td></tr>
+    <tr><td>Explorador CFDI</td><td><code>cfdisCliente.php</code></td><td><code>transactionObtenerReporteExplorador.php</code></td></tr>
+    <tr><td>Logs/Changelog</td><td><code>reportesLogs.php</code></td><td><code>transactionObtenerReporteLogs.php</code></td></tr>
+  </table>
+</div>
+
+<!-- MODULE 6: CLIENTS -->
+<h2 id="mod-clients">M&oacute;dulo 6: Clientes y colaboradores</h2>
+<div class="card">
+  <h3>Prop&oacute;sito</h3>
+  <p>CRUD completo de clientes (empresas fiscales) y colaboradores (empleados de Treviso). Solo disponible para el rol Admin.</p>
+
+  <div class="module-grid">
+    <div class="card" style="margin:0;">
+      <h4>Gesti&oacute;n de clientes</h4>
+      <p><strong>Vista:</strong> <code>root/clientes.php</code></p>
+      <p><strong>Transacciones:</strong></p>
+      <ul class="dep-list">
+        <li><code>transactionAltaCliente.php</code> - Crear</li>
+        <li><code>transactionEditarCliente.php</code> - Editar</li>
+        <li><code>buscarCliente.php</code> - Buscar</li>
+        <li><code>transactionAgregarBCCliente.php</code> - Agregar banco</li>
+        <li><code>transactionEditarBCCliente.php</code> - Editar banco</li>
+        <li><code>transactionEliminarBancoCliente.php</code> - Eliminar banco</li>
+        <li><code>transactionAltaUsuarioCliente.php</code> - Crear usuario cliente</li>
+        <li><code>transactionEditarUsuarioCliente.php</code> - Editar usuario</li>
+      </ul>
+      <p><strong>Tablas:</strong> <code>cliente</code>, <code>bancocliente</code>, <code>usuariocliente</code></p>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>Gesti&oacute;n de colaboradores</h4>
+      <p><strong>Vista:</strong> <code>root/colaboradores.php</code></p>
+      <p><strong>Transacciones:</strong></p>
+      <ul class="dep-list">
+        <li><code>transactionAltaColaborador.php</code> - Crear</li>
+        <li><code>transactionEditarColaborador.php</code> - Editar</li>
+        <li><code>buscarColaborador.php</code> - Buscar</li>
+        <li><code>buscarDatosColaborador.php</code> - Detalle</li>
+      </ul>
+      <p><strong>Tablas:</strong> <code>empleado</code>, <code>usuarioempleado</code></p>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE 7: NOTIFICATIONS -->
+<h2 id="mod-notifications">M&oacute;dulo 7: Notificaciones</h2>
+<div class="card">
+  <h3>Prop&oacute;sito</h3>
+  <p>Sistema de mensajer&iacute;a interna para enviar avisos entre usuarios del sistema, con fecha de caducidad.</p>
+
+  <h4>Archivos</h4>
+  <table>
+    <tr><th>Archivo</th><th>Funci&oacute;n</th></tr>
+    <tr><td><code>panelNotificacionesEmpleado.php</code></td><td>Vista del panel de notificaciones</td></tr>
+    <tr><td><code>transactionNuevaNotificacion.php</code></td><td>Crear notificaci&oacute;n</td></tr>
+    <tr><td><code>transactionEditarNotificacion.php</code></td><td>Editar notificaci&oacute;n</td></tr>
+    <tr><td><code>transactionEliminarNotificacion.php</code></td><td>Eliminar notificaci&oacute;n</td></tr>
+  </table>
+
+  <h4>Tabla DB</h4>
+  <p><code>notificacion</code> &mdash; Campos: IDUsuarioEmpleadoDestinatario, CaducidadFechaNotificacion, texto</p>
+</div>
+
+<!-- MODULE 8: SYNC -->
+<h2 id="mod-sync">M&oacute;dulo 8: Sincronizaci&oacute;n XML</h2>
+<div class="card">
+  <h3>Prop&oacute;sito</h3>
+  <p>Escaneo autom&aacute;tico de carpetas en el servidor de archivos para importar nuevos XMLs a la base de datos. Soporta ejecuci&oacute;n manual desde la UI y tarea programada CLI.</p>
+
+  <h4>Componentes</h4>
+  <table>
+    <tr><th>Archivo</th><th>Rol</th></tr>
+    <tr><td><code>transactions/proceso_xml.php</code></td><td>Motor de escaneo (NDJSON streaming para progreso real-time)</td></tr>
+    <tr><td><code>transactions/automation/sync_xml_global.php</code></td><td>Tarea programada (CLI) para sync global</td></tr>
+    <tr><td><code>colaborador/run_sync.php</code></td><td>Endpoint AJAX para disparar sync manualmente</td></tr>
+    <tr><td><code>colaborador/sync_status.php</code></td><td>Endpoint AJAX para consultar estado</td></tr>
+    <tr><td><code>colaborador/sync_reset.php</code></td><td>Endpoint AJAX para liberar cola bloqueada</td></tr>
+  </table>
+
+  <h4>Flujo de sync</h4>
+  <div class="flow-row">
+    <div class="flow-box fb-blue">UI: Bot&oacute;n "Cargar XML"</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box fb-green">run_sync.php (CSRF + proc_open)</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box fb-orange">sync_xml_global.php (background)</div>
+  </div>
+  <div class="flow-row" style="margin-left: 40px;">
+    <span class="flow-arrow">&darr;</span>
+    <div class="flow-box fb-purple">STATUS.json + HEARTBEAT.txt + Logs</div>
+    <span class="flow-arrow">&larr;</span>
+    <div class="flow-box fb-blue">sync_status.php (polling cada 5s)</div>
+  </div>
+
+  <h4>Telemetr&iacute;a</h4>
+  <p>Directorio: <code>C:\TrevisoLogs\xmlsync\</code></p>
+  <p>Archivos: STATUS.json, HEARTBEAT.txt, LAST_ACTION.txt, LAST_ERROR.json</p>
+</div>
+
+<!-- MODULE 9: ADMIN -->
+<h2 id="mod-admin">M&oacute;dulo 9: Administraci&oacute;n</h2>
+<div class="card">
+  <h3>Prop&oacute;sito</h3>
+  <p>Herramientas exclusivas del administrador para configuraci&oacute;n del sistema.</p>
+
+  <div class="module-grid">
+    <div class="card" style="margin:0;">
+      <h4>Noticias / Slides</h4>
+      <p>CMS interno para slides en el dashboard.</p>
+      <p><code>root/noticias.php</code></p>
+      <p>Tabla: <code>slide</code></p>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>M&eacute;todos de pago</h4>
+      <p>Cat&aacute;logo de formas de pago (CB/TC/TD).</p>
+      <p><code>root/formaPago.php</code></p>
+      <p>Tabla: <code>metodopago</code></p>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>Backup BD</h4>
+      <p>Generar y descargar respaldo SQL completo.</p>
+      <p><code>root/backup.php</code></p>
+    </div>
+    <div class="card" style="margin:0;">
+      <h4>Actualizar carpetas</h4>
+      <p>Re-escanear estructura de directorios.</p>
+      <p><code>root/actualizarCarpetas.php</code></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DB SCHEMA ===== -->
+<h2 id="db-schema">Esquema de base de datos</h2>
+<div class="card">
+  <h3>Tablas principales identificadas</h3>
+  <table>
+    <tr><th>Tabla</th><th>Prop&oacute;sito</th><th>Campos clave</th></tr>
+    <tr><td><code>empleado</code></td><td>Datos de colaboradores</td><td>IDEmpleado, Nombre, Apellidos, RutaEmpleado, ActivoEmpleado</td></tr>
+    <tr><td><code>usuarioempleado</code></td><td>Credenciales de acceso</td><td>IDUsuarioEmpleado, NickUsuarioEmpleado, PassUsuarioEmpleado, IDRol, IDEmpleado, ActivoUsuarioEmpleado</td></tr>
+    <tr><td><code>cliente</code></td><td>Empresas/clientes fiscales</td><td>IDCliente, NombreCliente, RFCCliente, RutaCarpetaCliente, IDEmpleado, ActivoCliente</td></tr>
+    <tr><td><code>bancocliente</code></td><td>Cuentas bancarias de clientes</td><td>IDBancoCliente, NombreBanco, NumeroCuenta, IDCliente</td></tr>
+    <tr><td><code>usuariocliente</code></td><td>Usuarios de clientes (portal externo)</td><td>IDUsuarioCliente, Nick, Pass, IDCliente</td></tr>
+    <tr><td><code>xml</code></td><td>Facturas CFDI importadas</td><td>IDXML, UUID, Serie, Folio, Emisor, Receptor, Fecha, Total, TipoXML (i/e/n/o), ContabilizadoXML, SaldadoXML</td></tr>
+    <tr><td><code>historialxml</code></td><td>Operaciones realizadas sobre XMLs</td><td>IDHistorialXML, IDXML, IDOperacion, MontoPagoReal, IDMetodoPago, ReemDep, TipoReemDep, ContabilizadoHistorico</td></tr>
+    <tr><td><code>complementopago</code></td><td>Complementos de pago CFDI</td><td>IDComplementoPago, UUID, Emisor, Receptor, FechaEmision, MontoPago, IDCliente</td></tr>
+    <tr><td><code>notacredito</code></td><td>Notas de cr&eacute;dito CFDI</td><td>IDNotaCredito, UUID, Emisor, Receptor, FechaEmision, MontoPago, ContabilizadoXML, SaldadoXML</td></tr>
+    <tr><td><code>depositoscliente</code></td><td>Dep&oacute;sitos agrupados</td><td>IDDepositoCliente, IDCliente, FechaDeposito, MontoDeposito, Contabilizado</td></tr>
+    <tr><td><code>reembolsoscliente</code></td><td>Reembolsos agrupados</td><td>IDReembolsoCliente, IDCliente, FechaReembolso, MontoReembolso, Contabilizado</td></tr>
+    <tr><td><code>metodopago</code></td><td>Cat&aacute;logo de m&eacute;todos de pago</td><td>IDMetodoPago, Descripcion, TipoBanco (CB/TC/TD), AplicaMetodoPago</td></tr>
+    <tr><td><code>operacionn</code></td><td>Cat&aacute;logo de operaciones sin CFDI</td><td>IDOperacionN, Descripcion, AplicaCuenta</td></tr>
+    <tr><td><code>operacionescliente</code></td><td>Operaciones sin CFDI por cliente</td><td>IDOperacionCliente, IDCliente, IDOperacionN, Monto</td></tr>
+    <tr><td><code>depositosclientencfdi</code></td><td>Dep&oacute;sitos sin CFDI</td><td>Similar a depositoscliente</td></tr>
+    <tr><td><code>reembolsosclientencfdi</code></td><td>Reembolsos sin CFDI</td><td>Similar a reembolsoscliente</td></tr>
+    <tr><td><code>notificacion</code></td><td>Mensajes internos</td><td>IDNotificacion, Remitente, Destinatario, Texto, FechaCaducidad</td></tr>
+    <tr><td><code>solicitudedicion</code></td><td>Solicitudes de edici&oacute;n</td><td>IDSolicitud, UUID, IDEmpleado, Comentario, Atendida</td></tr>
+    <tr><td><code>solicitudedicionobjeto</code></td><td>Solicitudes para operaciones</td><td>Similar a solicitudedicion</td></tr>
+    <tr><td><code>slide</code></td><td>Noticias/slides del dashboard</td><td>IDSlide, TipoSlide, RutaSlide, Descripcion, OrdenSlide, ActivoSlide</td></tr>
+    <tr><td><code>changelog</code></td><td>Log de cambios del sistema</td><td>IDChangelog, IDTipoChangelog, IDUsuario, Fecha, Hora, Comentario, TablaAfectada</td></tr>
+  </table>
+</div>
+
+<!-- DB RELATIONS -->
+<h2 id="db-relations">Relaciones entre tablas</h2>
+<div class="card">
+  <h3>Diagrama de relaciones principales</h3>
+  <div style="font-family: Consolas, monospace; font-size: 13px; background: #1e1e2e; color: #cdd6f4; padding: 20px; border-radius: 8px; overflow-x: auto; line-height: 1.8;">
+<span style="color:#89b4fa;">empleado</span> <span style="color:#f38ba8;">1</span>──<span style="color:#f38ba8;">N</span> <span style="color:#89b4fa;">cliente</span> (IDEmpleado)
+<span style="color:#89b4fa;">empleado</span> <span style="color:#f38ba8;">1</span>──<span style="color:#f38ba8;">1</span> <span style="color:#89b4fa;">usuarioempleado</span> (IDEmpleado)
+<span style="color:#89b4fa;">cliente</span>  <span style="color:#f38ba8;">1</span>──<span style="color:#f38ba8;">N</span> <span style="color:#89b4fa;">xml</span> (IDCliente)
+<span style="color:#89b4fa;">cliente</span>  <span style="color:#f38ba8;">1</span>──<span style="color:#f38ba8;">N</span> <span style="color:#89b4fa;">complementopago</span> (IDCliente)
+<span style="color:#89b4fa;">cliente</span>  <span style="color:#f38ba8;">1</span>──<span style="color:#f38ba8;">N</span> <span style="color:#89b4fa;">notacredito</span> (IDCliente)
+<span style="color:#89b4fa;">cliente</span>  <span style="color:#f38ba8;">1</span>──<span style="color:#f38ba8;">N</span> <span style="color:#89b4fa;">bancocliente</span> (IDCliente)
+<span style="color:#89b4fa;">cliente</span>  <span style="color:#f38ba8;">1</span>──<span style="color:#f38ba8;">N</span> <span style="color:#89b4fa;">usuariocliente</span> (IDCliente)
+<span style="color:#89b4fa;">cliente</span>  <span style="color:#f38ba8;">1</span>──<span style="color:#f38ba8;">N</span> <span style="color:#89b4fa;">depositoscliente</span> (IDCliente)
+<span style="color:#89b4fa;">cliente</span>  <span style="color:#f38ba8;">1</span>──<span style="color:#f38ba8;">N</span> <span style="color:#89b4fa;">reembolsoscliente</span> (IDCliente)
+<span style="color:#89b4fa;">xml</span>     <span style="color:#f38ba8;">1</span>──<span style="color:#f38ba8;">N</span> <span style="color:#89b4fa;">historialxml</span> (IDXML)
+<span style="color:#89b4fa;">historialxml</span> <span style="color:#f38ba8;">N</span>──<span style="color:#f38ba8;">1</span> <span style="color:#89b4fa;">metodopago</span> (IDMetodoPago)
+<span style="color:#89b4fa;">historialxml</span> <span style="color:#f38ba8;">N</span>──<span style="color:#f38ba8;">1</span> <span style="color:#89b4fa;">depositoscliente</span> (IDReemDep)
+<span style="color:#89b4fa;">historialxml</span> <span style="color:#f38ba8;">N</span>──<span style="color:#f38ba8;">1</span> <span style="color:#89b4fa;">reembolsoscliente</span> (IDReemDep)
+  </div>
+</div>
+
+<!-- ===== SECURITY ===== -->
+<h2 id="security">Problemas de seguridad identificados</h2>
+
+<div class="alert alert-danger">
+  <strong>CRITICO:</strong> Los siguientes problemas deben ser la m&aacute;xima prioridad en la reingenier&iacute;a.
+</div>
+
+<div class="card">
+  <table>
+    <tr><th>ID</th><th>Severidad</th><th>Problema</th><th>Ubicaci&oacute;n</th><th>Remediaci&oacute;n</th></tr>
+    <tr>
+      <td>SEC-01</td>
+      <td><span class="tag tag-security">CR&Iacute;TICO</span></td>
+      <td><strong>SQL Injection</strong> &mdash; Todas las queries usan interpolaci&oacute;n directa de variables <code>$_POST</code>/<code>$_GET</code> sin prepared statements</td>
+      <td>Todo el proyecto (transaction*.php, vistas)</td>
+      <td>Migrar a prepared statements (MySQLi o PDO)</td>
+    </tr>
+    <tr>
+      <td>SEC-02</td>
+      <td><span class="tag tag-security">CR&Iacute;TICO</span></td>
+      <td><strong>Contrase&ntilde;as en texto plano</strong> en BD y validaci&oacute;n directa con string</td>
+      <td><code>transactionValLogin.php</code>, <code>usuarioempleado</code></td>
+      <td>Implementar <code>password_hash()</code> / <code>password_verify()</code></td>
+    </tr>
+    <tr>
+      <td>SEC-03</td>
+      <td><span class="tag tag-security">CR&Iacute;TICO</span></td>
+      <td><strong>Credenciales hardcodeadas</strong> de BD visibles en c&oacute;digo fuente</td>
+      <td><code>bd.php</code> (3 copias), <code>backup.php</code></td>
+      <td>Mover a archivo <code>.env</code> o config fuera del webroot</td>
+    </tr>
+    <tr>
+      <td>SEC-04</td>
+      <td><span class="tag tag-security">ALTO</span></td>
+      <td><strong>Sin protecci&oacute;n CSRF</strong> en la mayor&iacute;a de formularios. Solo <code>run_sync.php</code> tiene token</td>
+      <td>Todos los forms POST</td>
+      <td>Implementar tokens CSRF globalmente</td>
+    </tr>
+    <tr>
+      <td>SEC-05</td>
+      <td><span class="tag tag-security">ALTO</span></td>
+      <td><strong>XSS potencial</strong> &mdash; Datos de BD mostrados sin <code>htmlspecialchars()</code> en m&uacute;ltiples vistas</td>
+      <td>Vistas colaborador y root</td>
+      <td>Sanitizar todas las salidas HTML</td>
+    </tr>
+    <tr>
+      <td>SEC-06</td>
+      <td><span class="tag tag-security">MEDIO</span></td>
+      <td><strong>backup.php expone estructura completa</strong> de la BD sin restricciones adicionales</td>
+      <td><code>root/backup.php</code></td>
+      <td>Agregar 2FA o confirmaci&oacute;n para backups</td>
+    </tr>
+    <tr>
+      <td>SEC-07</td>
+      <td><span class="tag tag-security">MEDIO</span></td>
+      <td><strong>Sesi&oacute;n no regenerada</strong> tras login (session fixation)</td>
+      <td><code>transactionValLogin.php</code></td>
+      <td>Usar <code>session_regenerate_id(true)</code> tras login</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ===== TECH DEBT ===== -->
+<h2 id="tech-debt">Deuda t&eacute;cnica</h2>
+<div class="card">
+  <table>
+    <tr><th>ID</th><th>Categor&iacute;a</th><th>Descripci&oacute;n</th><th>Impacto</th></tr>
+    <tr>
+      <td>TD-01</td>
+      <td>Duplicaci&oacute;n</td>
+      <td>Los paneles <code>root/</code> y <code>colaborador/</code> comparten ~80% del c&oacute;digo con variantes m&iacute;nimas (filtro por IDEmpleado y men&uacute; reducido)</td>
+      <td>Mantenimiento doble; bugs se arreglan en un panel y no en otro</td>
+    </tr>
+    <tr>
+      <td>TD-02</td>
+      <td>Duplicaci&oacute;n</td>
+      <td>Existen 3 copias de <code>bd.php</code> (ra&iacute;z, root/transactions, colaborador/transactions) con las mismas credenciales</td>
+      <td>Inconsistencia potencial al cambiar credenciales</td>
+    </tr>
+    <tr>
+      <td>TD-03</td>
+      <td>Arquitectura</td>
+      <td>Sin separaci&oacute;n MVC real: las vistas contienen queries SQL directas</td>
+      <td>Imposible hacer testing unitario; l&oacute;gica acoplada</td>
+    </tr>
+    <tr>
+      <td>TD-04</td>
+      <td>Librer&iacute;a</td>
+      <td>PHPExcel est&aacute; deprecada (2017). El reemplazo oficial es PhpSpreadsheet</td>
+      <td>Vulnerabilidades no parcheadas; incompatibilidad con PHP 8+</td>
+    </tr>
+    <tr>
+      <td>TD-05</td>
+      <td>Frontend</td>
+      <td>jQuery 2.x sin framework moderno. CSS inline mezclado con archivos. Sin minificaci&oacute;n.</td>
+      <td>Performance pobre; dif&iacute;cil de mantener</td>
+    </tr>
+    <tr>
+      <td>TD-06</td>
+      <td>Naming</td>
+      <td>Archivos de backup con fechas en el nombre (ej. <code>headers_backup 18-11-2022.php</code>)</td>
+      <td>Archivos muertos en producci&oacute;n; confusi&oacute;n</td>
+    </tr>
+    <tr>
+      <td>TD-07</td>
+      <td>Infraestructura</td>
+      <td>Dependencia de rutas Windows absolutas (<code>E:\XML\</code>, <code>C:\TrevisoLogs\</code>)</td>
+      <td>Imposible migrar a Linux/containers sin refactor</td>
+    </tr>
+    <tr>
+      <td>TD-08</td>
+      <td>Sesiones</td>
+      <td>Slides almacenados en <code>$_SESSION</code> (datos de UI en sesi&oacute;n del servidor)</td>
+      <td>Uso innecesario de memoria; problemas de concurrencia</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ===== RECOMMENDATIONS ===== -->
+<h2 id="recommendations">Recomendaciones para reingenier&iacute;a</h2>
+
+<div class="card">
+  <h3>Fase 1: Seguridad (inmediata)</h3>
+  <ul class="dep-list">
+    <li>Migrar todas las queries a <strong>prepared statements</strong> (PDO recomendado)</li>
+    <li>Implementar <strong>password_hash/verify</strong> para contrase&ntilde;as</li>
+    <li>Mover credenciales a un archivo <strong>.env</strong> fuera del webroot</li>
+    <li>Agregar protecci&oacute;n <strong>CSRF global</strong></li>
+    <li>Sanitizar toda salida HTML con <strong>htmlspecialchars</strong></li>
+    <li>Regenerar session ID tras login exitoso</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Fase 2: Consolidaci&oacute;n de c&oacute;digo</h3>
+  <ul class="dep-list">
+    <li>Unificar <code>root/</code> y <code>colaborador/</code> en una sola base con <strong>sistema de permisos</strong></li>
+    <li>Crear un &uacute;nico <code>bd.php</code> con clase de conexi&oacute;n centralizada</li>
+    <li>Extraer la l&oacute;gica de negocio de las vistas a <strong>clases de servicio</strong></li>
+    <li>Eliminar archivos backup/muertos del proyecto</li>
+    <li>Reemplazar PHPExcel por <strong>PhpSpreadsheet</strong></li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Fase 3: Arquitectura moderna</h3>
+  <ul class="dep-list">
+    <li>Adoptar un framework PHP (Laravel, Symfony) o al menos un micro-framework (Slim)</li>
+    <li>Implementar patr&oacute;n <strong>MVC</strong> con rutas, controladores y modelos</li>
+    <li>Migrar frontend a un framework moderno (Vue.js, React) con API REST</li>
+    <li>Implementar sistema de <strong>migraciones</strong> para la BD</li>
+    <li>Containerizar con Docker para eliminar dependencia de rutas Windows</li>
+    <li>Agregar <strong>testing automatizado</strong> (PHPUnit, Cypress)</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Mapa de m&oacute;dulos propuestos para nueva arquitectura</h3>
+  <table>
+    <tr><th>M&oacute;dulo nuevo</th><th>Responsabilidad</th><th>Archivos actuales que absorbe</th></tr>
+    <tr><td><code>Auth</code></td><td>Login, logout, sesi&oacute;n, roles, permisos</td><td>login.php, transactionValLogin, transactionLogout, transactionCambioPass</td></tr>
+    <tr><td><code>CFDI</code></td><td>Import, parse, clasificaci&oacute;n, b&uacute;squeda de XMLs</td><td>proceso_xml, sync_xml_global, cfdisCliente, buscarCFDI*</td></tr>
+    <tr><td><code>Operations</code></td><td>Dep&oacute;sitos, reembolsos, complementos, notas de cr&eacute;dito</td><td>depositos*, reembolsos*, complementos*, notascredito*, marcar*, verDetalle*</td></tr>
+    <tr><td><code>Accounting</code></td><td>Contabilizaci&oacute;n, saldado</td><td>conta*, transactionContabilizar*, transactionSaldar*</td></tr>
+    <tr><td><code>Reports</code></td><td>Generaci&oacute;n de reportes y exports</td><td>reportes*, transactionObtenerReporte*</td></tr>
+    <tr><td><code>Clients</code></td><td>CRUD clientes, bancos, usuarios</td><td>clientes.php, transactionAlta/Editar/Eliminar Cliente/Banco/Usuario</td></tr>
+    <tr><td><code>Staff</code></td><td>CRUD empleados y usuarios internos</td><td>colaboradores.php, transactionAlta/Editar Colaborador</td></tr>
+    <tr><td><code>Notifications</code></td><td>Mensajer&iacute;a interna</td><td>panelNotificaciones*, transaction*Notificacion</td></tr>
+    <tr><td><code>Admin</code></td><td>Config, slides, m&eacute;todos pago, backup</td><td>noticias, formaPago, backup, configNCFDI, actualizarCarpetas</td></tr>
+    <tr><td><code>Sync</code></td><td>Sincronizaci&oacute;n de archivos XML</td><td>run_sync, sync_status, sync_reset, sync_xml_global</td></tr>
+  </table>
+</div>
+
+<!-- FOOTER -->
+<div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--gris-borde); color: #888; font-size: 12px; text-align: center;">
+  Documentaci&oacute;n generada el 13 de marzo de 2026 &mdash; Espacio Treviso &mdash; Base para reingenier&iacute;a
+</div>
+
+</div><!-- /main -->
+
+<script>
+// Sidebar active state on scroll
+const sections = document.querySelectorAll('h1[id], h2[id]');
+const navLinks = document.querySelectorAll('.sidebar a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
