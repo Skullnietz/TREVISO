@@ -1,61 +1,250 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Espacio Treviso — Sistema de Gestión Interno
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Sistema web interno para la administración y operación de Espacio Treviso. Desarrollado con Laravel 7, incluye gestión de empleados, clientes, facturación CFDI, operaciones contables y reportes.
 
-## About Laravel
+> **Estado del proyecto:** En desarrollo activo. La base de autenticación está funcional; los módulos de negocio están en construcción.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tabla de contenidos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Stack tecnológico](#stack-tecnológico)
+- [Requisitos](#requisitos)
+- [Instalación](#instalación)
+- [Configuración](#configuración)
+- [Módulos del sistema](#módulos-del-sistema)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Base de datos](#base-de-datos)
+- [Autenticación](#autenticación)
+- [Rutas](#rutas)
+- [Desarrollo frontend](#desarrollo-frontend)
+- [Estado del desarrollo](#estado-del-desarrollo)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Stack tecnológico
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Capa | Tecnología |
+|---|---|
+| Backend | PHP 7.4+ / Laravel 7 |
+| Frontend | Blade + Tailwind CSS |
+| Base de datos | MySQL |
+| Assets | Laravel Mix + Webpack + Sass |
+| HTTP Client | Axios |
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Requisitos
 
-### Premium Partners
+- PHP >= 7.2.5
+- Composer
+- Node.js >= 12 + NPM
+- MySQL >= 5.7
+- Extensiones PHP: `BCMath`, `Ctype`, `JSON`, `Mbstring`, `OpenSSL`, `PDO`, `Tokenizer`, `XML`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## Instalación
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# 1. Clonar el repositorio
+git clone <url-del-repo>
+cd espaciotreviso
 
-## Code of Conduct
+# 2. Instalar dependencias PHP
+composer install
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 3. Instalar dependencias Node
+npm install
 
-## Security Vulnerabilities
+# 4. Copiar variables de entorno
+cp .env.example .env
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 5. Generar clave de la aplicación
+php artisan key:generate
 
-## License
+# 6. Configurar la base de datos en .env (ver sección Configuración)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 7. Ejecutar migraciones
+php artisan migrate
+
+# 8. Compilar assets
+npm run dev
+```
+
+---
+
+## Configuración
+
+Editar el archivo `.env` con los valores correspondientes al entorno:
+
+```env
+APP_NAME="Espacio Treviso"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=espaciotreviso
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+---
+
+## Módulos del sistema
+
+| Módulo | Ruta | Estado |
+|---|---|---|
+| Autenticación | `/` `/login` | ✅ Funcional |
+| Dashboard | `/dashboard` | 🔧 Placeholder |
+| CFDI / Facturación | `/cfdi` | 🔲 En desarrollo |
+| Operaciones | `/operations` | 🔲 En desarrollo |
+| Contabilidad | `/accounting` | 🔲 En desarrollo |
+| Reportes | `/reports` | 🔲 En desarrollo |
+| Clientes | `/clients` | 🔲 En desarrollo |
+| Personal | `/staff` | 🔲 En desarrollo |
+| Notificaciones | `/notifications` | 🔲 En desarrollo |
+| Administración | `/admin` | 🔲 En desarrollo |
+| Sincronización | `/sync` | 🔲 En desarrollo |
+
+---
+
+## Estructura del proyecto
+
+```
+espaciotreviso/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── AuthController.php          # Login / Logout
+│   │       ├── CfdiController.php          # Facturación CFDI
+│   │       ├── ClientsController.php       # Gestión de clientes
+│   │       ├── OperationsController.php    # Operaciones
+│   │       ├── AccountingController.php    # Contabilidad
+│   │       ├── ReportsController.php       # Reportes
+│   │       ├── StaffController.php         # Personal
+│   │       ├── NotificationsController.php # Notificaciones
+│   │       ├── SyncController.php          # Sincronización
+│   │       └── AdminController.php         # Administración
+│   ├── UsuarioEmpleado.php                 # Modelo de usuario (autenticación)
+│   ├── Empleado.php
+│   ├── Cliente.php
+│   ├── Xml.php
+│   ├── HistorialXml.php
+│   ├── DepositoCliente.php
+│   ├── ReembolsoCliente.php
+│   └── MetodoPago.php
+├── config/
+│   └── auth.php                            # Guard configurado para UsuarioEmpleado
+├── database/
+│   └── migrations/                         # Migraciones de todas las tablas
+├── resources/
+│   ├── views/
+│   │   └── auth/
+│   │       └── login.blade.php             # Vista de inicio de sesión
+│   ├── js/app.js
+│   └── sass/app.scss
+└── routes/
+    ├── web.php
+    └── api.php
+```
+
+---
+
+## Base de datos
+
+El sistema utiliza un esquema con nomenclatura en español. Todas las tablas personalizadas tienen timestamps desactivados.
+
+| Tabla | Modelo | Descripción |
+|---|---|---|
+| `usuarioempleado` | `UsuarioEmpleado` | Cuentas de acceso de empleados |
+| `empleado` | `Empleado` | Datos maestros de empleados |
+| `cliente` | `Cliente` | Datos maestros de clientes |
+| `xml` | `Xml` | Almacenamiento de documentos XML (CFDI) |
+| `historialxml` | `HistorialXml` | Historial y auditoría de XMLs |
+| `depositoscliente` | `DepositoCliente` | Depósitos de clientes |
+| `reembolsoscliente` | `ReembolsoCliente` | Reembolsos a clientes |
+| `metodopago` | `MetodoPago` | Catálogo de métodos de pago |
+
+---
+
+## Autenticación
+
+El sistema usa un guard de sesión personalizado basado en el modelo `UsuarioEmpleado` (tabla `usuarioempleado`), distinto al modelo `User` estándar de Laravel.
+
+**Campos clave del modelo:**
+- `NickUsuarioEmpleado` — nombre de usuario para login
+- `PassUsuarioEmpleado` — contraseña (columna personalizada)
+
+**Migración de contraseñas:** El sistema detecta contraseñas en texto plano y las convierte automáticamente a bcrypt en el primer inicio de sesión exitoso, asegurando compatibilidad con datos históricos.
+
+---
+
+## Rutas
+
+```php
+// Públicas
+GET  /          → Formulario de login
+POST /login     → Procesar autenticación
+POST /logout    → Cerrar sesión
+
+// Protegidas (requieren sesión activa)
+GET  /dashboard → Panel principal
+
+// Recursos (CRUD completo, en desarrollo)
+/cfdi, /operations, /accounting, /reports,
+/clients, /staff, /notifications, /admin, /sync
+```
+
+---
+
+## Desarrollo frontend
+
+```bash
+# Compilar assets una vez
+npm run dev
+
+# Modo watch (recompila al guardar)
+npm run watch
+
+# Hot reload
+npm run hot
+
+# Build de producción
+npm run prod
+```
+
+Los assets se compilan desde `resources/` hacia `public/js/` y `public/css/`.
+
+---
+
+## Estado del desarrollo
+
+### Completado
+- [x] Inicialización del proyecto Laravel 7
+- [x] Migraciones de base de datos (9 tablas personalizadas)
+- [x] Sistema de autenticación con modelo `UsuarioEmpleado`
+- [x] Vista de login con Tailwind CSS (diseño responsivo)
+- [x] Estructura de rutas para todos los módulos
+- [x] Migración transparente de contraseñas (texto plano → bcrypt)
+
+### En progreso / Pendiente
+- [ ] Lógica de negocio en todos los controladores
+- [ ] Vistas Blade para cada módulo
+- [ ] Dashboard principal
+- [ ] Módulo CFDI / Facturación
+- [ ] Gestión de clientes y depósitos
+- [ ] Reportes y contabilidad
+- [ ] Sistema de notificaciones
+- [ ] Sincronización de datos
+- [ ] Panel de administración
+- [ ] Autenticación API (tokens)
+
+---
+
+## Licencia
+
+Uso interno — Espacio Treviso. Todos los derechos reservados.
