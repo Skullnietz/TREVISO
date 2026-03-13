@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Laravel Backend (php artisan serve)",
+      "runtimeExecutable": "php",
+      "runtimeArgs": ["artisan", "serve"],
+      "port": 8000
+    },
+    {
+      "name": "Frontend Watch (npm run watch)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "watch"],
+      "port": 8080
+    },
+    {
+      "name": "Frontend Hot Reload (npm run hot)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "hot"],
+      "port": 8080
+    }
+  ]
+}

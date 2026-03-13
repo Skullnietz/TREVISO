@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Laravel Backend (php artisan serve)",
+      "runtimeExecutable": "C:\\PHP\\php.exe",
+      "runtimeArgs": ["espaciotreviso/artisan", "serve"],
+      "port": 8000
+    },
+    {
+      "name": "Frontend Watch (npm run watch)",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd espaciotreviso && npm run watch"],
+      "port": 8080
+    },
+    {
+      "name": "Frontend Hot Reload (npm run hot)",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd espaciotreviso && npm run hot"],
+      "port": 8080
+    }
+  ]
+}
