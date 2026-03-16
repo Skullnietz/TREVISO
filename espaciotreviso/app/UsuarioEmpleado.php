@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,22 +8,31 @@ class UsuarioEmpleado extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'usuarioempleado';
+    protected $table      = 'usuarioempleado';
     protected $primaryKey = 'IDUsuarioEmpleado';
-    public $timestamps = false;
+    public    $timestamps = false;
 
-    /**
-     * The attributes that should be hidden for arrays.
-     */
-    protected $hidden = [
+    protected $fillable = [
+        'NickUsuarioEmpleado',
         'PassUsuarioEmpleado',
+        'ActivoUsuarioEmpleado',
+        'IDRol',
+        'IDEmpleado',
     ];
 
-    /**
-     * Overriding the getAuthPassword method since our password column has a custom name.
-     */
-    public function getAuthPassword()
+    protected $hidden = ['PassUsuarioEmpleado'];
+
+    // Eloquent auth contracts
+    public function getAuthIdentifierName() { return 'IDUsuarioEmpleado'; }
+    public function getAuthPassword()       { return $this->PassUsuarioEmpleado; }
+
+    public function empleado()
     {
-        return $this->PassUsuarioEmpleado;
+        return $this->belongsTo(Empleado::class, 'IDEmpleado', 'IDEmpleado');
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class, 'IDRol', 'IDRol');
     }
 }

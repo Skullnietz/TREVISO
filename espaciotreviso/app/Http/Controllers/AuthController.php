@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\UsuarioEmpleado;
@@ -18,50 +16,49 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'login' => 'required',
-            'password' => 'required'
+            'login'    => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        $credentials = $request->only('password');
-        $loginField = $request->input('login');
+        $nick     = $request->input('login');
+        $password = $request->input('password');
 
-        // Allow logging in with either username (NickUsuarioEmpleado) or email (if it existed, though mainly Nick in this db).
-        // Let's assume login field corresponds to NickUsuarioEmpleado
-        $user = UsuarioEmpleado::where('NickUsuarioEmpleado', $loginField)->first();
+        $user = UsuarioEmpleado::where('NickUsuarioEmpleado', $nick)
+                               ->where('ActivoUsuarioEmpleado', 'A')
+                               ->first();
 
-        if ($user) {
-            // Check if the current stored password is NOT hashed (Bcrypt hashes start with $2y$)
-            if (!str_starts_with($user->PassUsuarioEmpleado, '$2y$')) {
-                // If it evaluates to plain text, check plain text equality
-                if ($user->PassUsuarioEmpleado === $request->input('password')) {
-                    // It's a match! Securely hash it and update the DB transparently
-                    $user->PassUsuarioEmpleado = Hash::make($request->input('password'));
-                    $user->save();
-                    
-                    // Now log them in
-                    Auth::login($user);
-                    $request->session()->regenerate();
-                    return redirect()->intended('dashboard');
-                }
-            } else {
-                // The password is already securely hashed, attempt standard Auth flow
-                if (Hash::check($request->input('password'), $user->PassUsuarioEmpleado)) {
-                    Auth::login($user);
-                    $request->session()->regenerate();
-                    return redirect()->intended('dashboard');
-                }
+        if (!$user) {
+            return back()->withErrors(['login' => 'Credenciales incorrectas.'])->withInput();
+        }
+
+        $storedPass = $user->PassUsuarioEmpleado;
+
+        // Migracion transparente: texto plano -> bcrypt en el primer login
+        // strpos compatible con PHP 7.x
+        if (strpos($storedPass, '$2y$') !== 0) {
+            if ($storedPass !== $password) {
+                return back()->withErrors(['login' => 'Credenciales incorrectas.'])->withInput();
+            }
+            $user->PassUsuarioEmpleado = Hash::make($password);
+            $user->save();
+        } else {
+            if (!Hash::check($password, $storedPass)) {
+                return back()->withErrors(['login' => 'Credenciales incorrectas.'])->withInput();
             }
         }
 
-        return back()->withErrors(['login' => 'Credenciales incorrectas.'])->withInput();
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('dashboard'));
     }
 
     public function logout(Request $request)
     {
-        auth()->logout();
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
-        return redirect('/');
+
+        return redirect()->route('login');
     }
 }

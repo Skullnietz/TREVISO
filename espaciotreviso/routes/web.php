@@ -2,33 +2,41 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+// Auth
+Route::get('/',        'AuthController@showLoginForm')->name('login');
+Route::post('/login',  'AuthController@login'        )->name('login.post');
+Route::post('/logout', 'AuthController@logout'       )->name('logout');
 
-Route::get('/', 'AuthController@showLoginForm')->name('login');
-Route::post('/login', 'AuthController@login')->name('login.post');
-Route::post('/logout', 'AuthController@logout')->name('logout');
+// App — requiere autenticacion
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard',        'DashboardController@index'  )->name('dashboard');
 
-// Basic module routes (Admin, Auth, etc)
-Route::middleware(['web'])->group(function () {
-    Route::get('/dashboard', function() {
-        return "¡Login Exitoso! Estás autenticado como: " . auth()->user()->NickUsuarioEmpleado;
-    })->name('dashboard')->middleware('auth');
-    Route::resource('cfdi', 'CfdiController');
-    Route::resource('operations', 'OperationsController');
-    Route::resource('accounting', 'AccountingController');
-    Route::resource('reports', 'ReportsController');
-    Route::resource('clients', 'ClientsController');
-    Route::resource('staff', 'StaffController');
-    Route::resource('notifications', 'NotificationsController');
-    Route::resource('admin', 'AdminController');
-    Route::resource('sync', 'SyncController');
+    // CFDI / XML
+    Route::get('/cfdi',             'CfdiController@index'       )->name('cfdi.index');
+    Route::get('/cfdi/{id}',        'CfdiController@show'        )->name('cfdi.show');
+
+    // Operaciones
+    Route::get('/operaciones',             'OperacionesController@index'         )->name('operaciones.index');
+    Route::get('/operaciones/depositos',   'OperacionesController@depositos'     )->name('operaciones.depositos');
+    Route::get('/operaciones/reembolsos',  'OperacionesController@reembolsos'    )->name('operaciones.reembolsos');
+
+    // Contabilidad
+    Route::get('/contabilidad',            'ContabilidadController@index'        )->name('contabilidad.index');
+
+    // Reportes
+    Route::get('/reportes',                'ReportesController@index'            )->name('reportes.index');
+
+    // Clientes
+    Route::get('/clientes',                'ClientesController@index'            )->name('clientes.index');
+    Route::get('/clientes/{id}',           'ClientesController@show'             )->name('clientes.show');
+
+    // Notificaciones
+    Route::get('/notificaciones',          'NotificacionesController@index'      )->name('notificaciones.index');
+
+    // Admin (solo rol 1) - usar middleware esAdmin registrado en Kernel
+    Route::middleware(['esAdmin'])->group(function () {
+        Route::get('/admin',               'AdminController@index'               )->name('admin.index');
+        Route::get('/admin/empleados',     'AdminController@empleados'           )->name('admin.empleados');
+        Route::get('/admin/clientes',      'AdminController@clientes'            )->name('admin.clientes');
+    });
 });
