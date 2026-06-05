@@ -65,6 +65,18 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'efirma' => [
+            'driver' => 'local',
+            'root' => storage_path('app/efirma'),
+            'visibility' => 'private',
+        ],
+
+        'cfdis' => [
+            'driver' => 'local',
+            'root' => storage_path('app/cfdis'),
+            'visibility' => 'private',
+        ],
+
     ],
 
     /*
