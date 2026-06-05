@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="es" id="htmlRoot" class="dark scroll-smooth">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Treviso — Firma de servicios financieros, fiscales y administrativos en Toluca, México. Contabilidad, auditoría, nómina, seguros y más."/>
+<title>Treviso — Inteligencia Empresarial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary:         "#32a5d7",
+        "primary-hover": "#47bcea",
+        "primary-dark":  "#1e7ea1",
+        accent:          "#8e989e",
+        "dk-bg":         "#111c21",
+        "dk-surface":    "#1a2428",
+        "dk-border":     "#2d3f47",
+        "dk-input":      "#243038",
+        "dk-text":       "#F8F9FA",
+        "lt-bg":         "#f1f5f9",
+        "lt-surface":    "#ffffff",
+        "lt-border":     "#e2e8f0",
+        "lt-text":       "#1e293b",
+      },
+      fontFamily: { display: ["Inter","sans-serif"] },
+    }
+  }
+};
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  * { box-sizing: border-box; }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* Nav blur */
+  #navbar { transition: background .3s ease, box-shadow .3s ease; }
+  #navbar.scrolled {
+    background: rgba(26,36,40,.92);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 rgba(45,63,71,.6);
+  }
+  .dark #navbar.scrolled-light {
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(14px);
+  }
+
+  /* Hero gradient overlay */
+  .hero-overlay {
+    background: linear-gradient(135deg,
+      rgba(17,28,33,.92) 0%,
+      rgba(17,28,33,.70) 50%,
+      rgba(50,165,215,.30) 100%);
+  }
+  .light .hero-overlay {
+    background: linear-gradient(135deg,
+      rgba(17,28,33,.80) 0%,
+      rgba(17,28,33,.55) 60%,
+      rgba(50,165,215,.20) 100%);
+  }
+
+  /* Service card hover */
+  .service-card { transition: transform .25s ease, box-shadow .25s ease; }
+  .service-card:hover { transform: translateY(-6px); }
+
+  /* Smooth underline nav links */
+  .nav-link::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: #32a5d7;
+    transform: scaleX(0);
+    transition: transform .2s ease;
+  }
+  .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #32a5d7; border-radius: 9999px; }
+</style>
+<script>
+  /* Apply theme before first paint */
+  (function(){
+    var dark = localStorage.getItem('theme') !== 'light';
+    document.getElementById('htmlRoot').classList.toggle('dark', dark);
+  })();
+</script>
+</head>
+
+<body class="bg-lt-bg dark:bg-dk-bg text-lt-text dark:text-dk-text font-display antialiased">
+
+<!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+<nav id="navbar" class="fixed top-0 inset-x-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-6">
+
+    <!-- Logo -->
+    <a href="#inicio" class="flex-shrink-0">
+      <span class="inline-flex items-center rounded-lg px-2.5 py-1.5
+                   bg-[#1e7ea1] dark:bg-transparent transition-colors duration-200">
+        <img src="img/logo_treviso.png" alt="Treviso" class="h-7 w-auto object-contain">
+      </span>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-6 flex-1">
+      <a href="#inicio"   class="nav-link text-sm font-medium text-white/80 hover:text-white transition-colors pb-0.5">Inicio</a>
+      <a href="#nosotros" class="nav-link text-sm font-medium text-white/80 hover:text-white transition-colors pb-0.5">Nosotros</a>
+      <a href="#servicios" class="nav-link text-sm font-medium text-white/80 hover:text-white transition-colors pb-0.5">Servicios</a>
+      <a href="#contacto"  class="nav-link text-sm font-medium text-white/80 hover:text-white transition-colors pb-0.5">Contacto</a>
+    </div>
+
+    <div class="flex-1 md:flex-none"></div>
+
+    <!-- Phone (desktop) -->
+    <a href="tel:7222374699"
+       class="hidden lg:flex items-center gap-1.5 text-sm text-white/70 hover:text-primary transition-colors">
+      <span class="material-symbols-outlined text-[16px]">call</span>
+      722 237 4699
+    </a>
+
+    <!-- Theme toggle -->
+    <button onclick="toggleTheme()" title="Cambiar tema"
+            class="flex items-center justify-center w-8 h-8 rounded-lg
+                   bg-white/10 hover:bg-white/20 text-white/80 hover:text-white
+                   border border-white/15 transition-colors flex-shrink-0">
+      <span class="material-symbols-outlined text-[18px]" id="themeIcon">light_mode</span>
+    </button>
+
+    <!-- Espacio Treviso CTA -->
+    <a href="http://192.168.1.200/TREVISO/espaciotreviso/public/"
+       class="hidden sm:flex items-center gap-1.5 h-8 px-4 rounded-lg
+              bg-primary hover:bg-primary-hover text-white text-sm font-semibold
+              transition-colors flex-shrink-0">
+      <span class="material-symbols-outlined text-[15px]">login</span>
+      Espacio Treviso
+    </a>
+
+    <!-- Mobile menu button -->
+    <button onclick="toggleMobileMenu()" id="menuBtn"
+            class="md:hidden flex items-center justify-center w-8 h-8 rounded-lg
+                   bg-white/10 text-white border border-white/15">
+      <span class="material-symbols-outlined text-[20px]">menu</span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="md:hidden hidden bg-dk-surface/95 backdrop-blur-md border-t border-dk-border">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
+      <a href="#inicio"    onclick="closeMobile()" class="px-3 py-2.5 rounded-lg text-sm text-dk-text hover:bg-dk-input transition-colors">Inicio</a>
+      <a href="#nosotros"  onclick="closeMobile()" class="px-3 py-2.5 rounded-lg text-sm text-dk-text hover:bg-dk-input transition-colors">Nosotros</a>
+      <a href="#servicios" onclick="closeMobile()" class="px-3 py-2.5 rounded-lg text-sm text-dk-text hover:bg-dk-input transition-colors">Servicios</a>
+      <a href="#contacto"  onclick="closeMobile()" class="px-3 py-2.5 rounded-lg text-sm text-dk-text hover:bg-dk-input transition-colors">Contacto</a>
+      <a href="tel:7222374699" class="px-3 py-2.5 rounded-lg text-sm text-primary flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">call</span>722 237 4699
+      </a>
+      <a href="http://192.168.1.200/TREVISO/espaciotreviso/public/"
+         class="mt-1 flex items-center justify-center gap-2 h-10 rounded-lg
+                bg-primary text-white text-sm font-semibold">
+        <span class="material-symbols-outlined text-[16px]">login</span>Espacio Treviso
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section id="inicio" class="relative min-h-screen flex items-center overflow-hidden">
+  <img src="img/landing_hero.jpg" alt="Treviso" loading="eager"
+       class="absolute inset-0 w-full h-full object-cover object-center"/>
+  <div class="hero-overlay absolute inset-0"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-20 w-full">
+    <div class="max-w-2xl">
+      <span class="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full
+                   bg-primary/20 border border-primary/40 text-primary text-xs font-semibold tracking-wide mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"></span>
+        20+ años de experiencia
+      </span>
+      <h1 class="reveal text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight">
+        Inteligencia<br>
+        <span class="text-primary">Empresarial</span>
+      </h1>
+      <p class="reveal mt-6 text-lg text-white/75 leading-relaxed max-w-xl">
+        Reconocemos y valoramos a nuestros clientes. Nos ocupamos de cumplir las expectativas
+        con la oportunidad que nos demandan, aportando siempre herramientas para la toma
+        de decisiones.
+      </p>
+      <div class="reveal mt-8 flex flex-wrap gap-4">
+        <a href="#contacto"
+           class="flex items-center gap-2 h-12 px-6 rounded-xl
+                  bg-primary hover:bg-primary-hover text-white font-bold text-sm
+                  transition-colors shadow-lg shadow-primary/30">
+          <span class="material-symbols-outlined text-[18px]">send</span>
+          Contáctanos
+        </a>
+        <a href="#servicios"
+           class="flex items-center gap-2 h-12 px-6 rounded-xl
+                  bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold text-sm
+                  transition-colors backdrop-blur-sm">
+          <span class="material-symbols-outlined text-[18px]">grid_view</span>
+          Nuestros servicios
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40">
+    <span class="text-xs tracking-widest uppercase">Scroll</span>
+    <span class="material-symbols-outlined text-[22px] animate-bounce">keyboard_arrow_down</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ STATS ═══════════════════════════ -->
+<section class="bg-dk-surface dark:bg-dk-surface bg-white border-y border-lt-border dark:border-dk-border">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div class="reveal">
+        <p class="text-3xl sm:text-4xl font-black text-primary">20+</p>
+        <p class="text-sm text-accent mt-1 font-medium">Años de experiencia</p>
+      </div>
+      <div class="reveal">
+        <p class="text-3xl sm:text-4xl font-black text-primary">6</p>
+        <p class="text-sm text-accent mt-1 font-medium">Servicios integrales</p>
+      </div>
+      <div class="reveal">
+        <p class="text-3xl sm:text-4xl font-black text-primary">100%</p>
+        <p class="text-sm text-accent mt-1 font-medium">Clientes satisfechos</p>
+      </div>
+      <div class="reveal">
+        <p class="text-3xl sm:text-4xl font-black text-primary">MX</p>
+        <p class="text-sm text-accent mt-1 font-medium">Toluca, México</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ NOSOTROS ═══════════════════════════ -->
+<section id="nosotros" class="py-24 bg-lt-bg dark:bg-dk-bg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Image -->
+      <div class="reveal relative order-2 lg:order-1">
+        <div class="rounded-2xl overflow-hidden shadow-2xl">
+          <img src="img/landing_nosotros.jpg" alt="Equipo Treviso"
+               class="w-full h-[420px] object-cover object-center"/>
+        </div>
+        <!-- Floating badge -->
+        <div class="absolute -bottom-6 -right-6 bg-primary rounded-2xl shadow-xl p-5
+                    flex flex-col items-center text-white text-center w-32">
+          <span class="text-3xl font-black">20+</span>
+          <span class="text-xs font-medium leading-tight mt-0.5">años de experiencia</span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="order-1 lg:order-2">
+        <span class="reveal text-primary text-sm font-bold uppercase tracking-[0.15em]">Quiénes somos</span>
+        <h2 class="reveal mt-3 text-3xl sm:text-4xl font-black text-lt-text dark:text-dk-text leading-tight">
+          Una firma de profesionales<br>comprometidos con tu éxito
+        </h2>
+        <p class="reveal mt-5 text-accent leading-relaxed">
+          Somos una organización de servicios que como asesores profesionales, ayudamos a nuestros
+          clientes a resolver problemas complejos de negocios. Nuestro objetivo es mejorar su
+          capacidad para generar valor, administrar el riesgo y mejorar el rendimiento.
+        </p>
+
+        <!-- Misión -->
+        <div class="reveal mt-8 rounded-xl border border-lt-border dark:border-dk-border
+                    bg-lt-surface dark:bg-dk-surface p-6">
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary text-[28px] flex-shrink-0 mt-0.5">stars</span>
+            <div>
+              <h3 class="font-bold text-lt-text dark:text-dk-text text-lg">Nuestra Misión</h3>
+              <p class="text-accent text-sm leading-relaxed mt-2">
+                Somos una firma de profesionales que brinda servicios financieros, fiscales,
+                administrativos y jurídicos que asegura la óptima situación fiscal y financiera
+                de nuestros clientes. Nuestro servicio se caracteriza por ser confiable, oportuno,
+                veraz y adecuado a las necesidades del cliente.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal mt-6 flex flex-wrap gap-3">
+          <div class="flex items-center gap-2 text-sm text-lt-text dark:text-dk-text">
+            <span class="w-5 h-5 rounded-full bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[14px]">check</span>
+            </span>
+            Confiable y oportuno
+          </div>
+          <div class="flex items-center gap-2 text-sm text-lt-text dark:text-dk-text">
+            <span class="w-5 h-5 rounded-full bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[14px]">check</span>
+            </span>
+            Personal calificado
+          </div>
+          <div class="flex items-center gap-2 text-sm text-lt-text dark:text-dk-text">
+            <span class="w-5 h-5 rounded-full bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[14px]">check</span>
+            </span>
+            Trato personalizado
+          </div>
+          <div class="flex items-center gap-2 text-sm text-lt-text dark:text-dk-text">
+            <span class="w-5 h-5 rounded-full bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[14px]">check</span>
+            </span>
+            Tecnología de punta
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ SERVICIOS ═══════════════════════════ -->
+<section id="servicios" class="py-24 bg-lt-surface dark:bg-dk-surface">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="reveal text-primary text-sm font-bold uppercase tracking-[0.15em]">Lo que hacemos</span>
+      <h2 class="reveal mt-3 text-3xl sm:text-4xl font-black text-lt-text dark:text-dk-text">
+        Servicios integrales de alta calidad
+      </h2>
+      <p class="reveal mt-4 text-accent">
+        Somos una firma con la capacidad de brindar servicios integrales adaptados a las necesidades de tu empresa.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Contabilidad -->
+      <div class="reveal service-card rounded-2xl overflow-hidden border border-lt-border dark:border-dk-border
+                  bg-lt-bg dark:bg-dk-bg hover:shadow-2xl hover:shadow-primary/10
+                  hover:border-primary/40 dark:hover:border-primary/40 group">
+        <!-- Hero image -->
+        <div class="relative h-48 overflow-hidden">
+          <img src="img/svc_contabilidad.jpg" alt="Contabilidad"
+               class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-primary/90 text-white flex items-center justify-center backdrop-blur-sm">
+              <span class="material-symbols-outlined text-[20px]">calculate</span>
+            </div>
+            <h3 class="text-white font-bold text-lg drop-shadow">Contabilidad</h3>
+          </div>
+        </div>
+        <!-- Body -->
+        <div class="p-6">
+          <p class="text-accent text-sm leading-relaxed">
+            Registro contable de operaciones, elaboración de estados financieros, declaraciones
+            parciales y anuales. Monitoreamos tu situación fiscal constantemente para que
+            conozcas tu estatus y tomes las decisiones adecuadas.
+          </p>
+          <a href="#contacto" class="mt-5 inline-flex items-center gap-1 text-primary text-sm font-semibold
+                                     group-hover:gap-2 transition-all">
+            Saber más <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Diseño de Esquemas Fiscales -->
+      <div class="reveal service-card rounded-2xl overflow-hidden border border-lt-border dark:border-dk-border
+                  bg-lt-bg dark:bg-dk-bg hover:shadow-2xl hover:shadow-primary/10
+                  hover:border-primary/40 dark:hover:border-primary/40 group">
+        <div class="relative h-48 overflow-hidden">
+          <img src="img/svc_fiscal.jpg" alt="Esquemas Fiscales"
+               class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-primary/90 text-white flex items-center justify-center backdrop-blur-sm">
+              <span class="material-symbols-outlined text-[20px]">account_balance</span>
+            </div>
+            <h3 class="text-white font-bold text-base drop-shadow leading-tight">Esquemas<br>Fiscales</h3>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-accent text-sm leading-relaxed">
+            Creamos el esquema de cumplimiento de obligaciones fiscales del contribuyente con
+            el menor costo posible, valorando opciones y sus riesgos. Obtenemos resoluciones
+            favorables para aplicar las opciones sin riesgo alguno.
+          </p>
+          <a href="#contacto" class="mt-5 inline-flex items-center gap-1 text-primary text-sm font-semibold
+                                     group-hover:gap-2 transition-all">
+            Saber más <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Auditoría -->
+      <div class="reveal service-card rounded-2xl overflow-hidden border border-lt-border dark:border-dk-border
+                  bg-lt-bg dark:bg-dk-bg hover:shadow-2xl hover:shadow-primary/10
+                  hover:border-primary/40 dark:hover:border-primary/40 group">
+        <div class="relative h-48 overflow-hidden">
+          <img src="img/svc_auditoria.jpg" alt="Auditoría"
+               class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-primary/90 text-white flex items-center justify-center backdrop-blur-sm">
+              <span class="material-symbols-outlined text-[20px]">fact_check</span>
+            </div>
+            <h3 class="text-white font-bold text-lg drop-shadow">Auditoría</h3>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-accent text-sm leading-relaxed">
+            Elaboramos estados financieros proyectados para créditos, fianzas y garantías.
+            Dictámenes especiales para enajenación de acciones, fusiones y compra de empresas.
+            Trámites ante SAT, IMSS, INFONAVIT y más.
+          </p>
+          <a href="#contacto" class="mt-5 inline-flex items-center gap-1 text-primary text-sm font-semibold
+                                     group-hover:gap-2 transition-all">
+            Saber más <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Nómina -->
+      <div class="reveal service-card rounded-2xl overflow-hidden border border-lt-border dark:border-dk-border
+                  bg-lt-bg dark:bg-dk-bg hover:shadow-2xl hover:shadow-primary/10
+                  hover:border-primary/40 dark:hover:border-primary/40 group">
+        <div class="relative h-48 overflow-hidden">
+          <img src="img/svc_nomina.jpg" alt="Nómina"
+               class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-primary/90 text-white flex items-center justify-center backdrop-blur-sm">
+              <span class="material-symbols-outlined text-[20px]">payments</span>
+            </div>
+            <h3 class="text-white font-bold text-lg drop-shadow">Nómina</h3>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-accent text-sm leading-relaxed">
+            La nómina es uno de los procesos con más implicaciones fiscales. Manejamos la
+            complejidad de sus cálculos, las cambiantes regulaciones y lo delicado de las
+            relaciones laborales con profesionalismo y precisión.
+          </p>
+          <a href="#contacto" class="mt-5 inline-flex items-center gap-1 text-primary text-sm font-semibold
+                                     group-hover:gap-2 transition-all">
+            Saber más <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Seguros -->
+      <div class="reveal service-card rounded-2xl overflow-hidden border border-lt-border dark:border-dk-border
+                  bg-lt-bg dark:bg-dk-bg hover:shadow-2xl hover:shadow-primary/10
+                  hover:border-primary/40 dark:hover:border-primary/40 group">
+        <div class="relative h-48 overflow-hidden">
+          <img src="img/svc_seguros.jpg" alt="Seguros"
+               class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-primary/90 text-white flex items-center justify-center backdrop-blur-sm">
+              <span class="material-symbols-outlined text-[20px]">security</span>
+            </div>
+            <h3 class="text-white font-bold text-lg drop-shadow">Seguros</h3>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-accent text-sm leading-relaxed">
+            Planes de aseguramiento para tu personal: Hombre Clave (Seguro de Vida) y
+            Gastos Médicos. Protege a quienes hacen crecer tu empresa con cobertura
+            hospitalaria y ante enfermedades graves.
+          </p>
+          <a href="#contacto" class="mt-5 inline-flex items-center gap-1 text-primary text-sm font-semibold
+                                     group-hover:gap-2 transition-all">
+            Saber más <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Espacio Treviso -->
+      <div class="reveal service-card rounded-2xl overflow-hidden border-2 border-primary/50
+                  bg-lt-bg dark:bg-dk-bg hover:shadow-2xl hover:shadow-primary/20
+                  relative group">
+        <div class="relative h-48 overflow-hidden">
+          <img src="img/svc_espacio.jpg" alt="Espacio Treviso"
+               class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-dk-bg/90 via-primary/30 to-transparent"></div>
+          <!-- Exclusivo badge -->
+          <div class="absolute top-3 right-3">
+            <span class="px-2.5 py-1 rounded-full bg-primary text-white text-[10px] font-bold uppercase tracking-wide shadow-lg">
+              Exclusivo
+            </span>
+          </div>
+          <div class="absolute bottom-4 left-4 flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center shadow-lg">
+              <span class="material-symbols-outlined text-[20px]">dashboard</span>
+            </div>
+            <h3 class="text-white font-bold text-lg drop-shadow">Espacio Treviso</h3>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-accent text-sm leading-relaxed">
+            Plataforma digital exclusiva para clientes: consulta tus CFDI's, estados financieros,
+            reportes y operaciones en tiempo real desde cualquier dispositivo.
+          </p>
+          <a href="http://192.168.1.200/TREVISO/espaciotreviso/public/" class="mt-5 inline-flex items-center gap-1.5 h-9 px-4 rounded-lg
+                                  bg-primary hover:bg-primary-hover text-white text-sm font-semibold
+                                  transition-colors">
+            <span class="material-symbols-outlined text-[15px]">login</span>
+            Acceder
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ POR QUÉ NOSOTROS ═══════════════════════════ -->
+<section class="py-24 bg-lt-bg dark:bg-dk-bg relative overflow-hidden">
+  <!-- Decorative bg -->
+  <div class="absolute inset-0 opacity-5 dark:opacity-10"
+       style="background: radial-gradient(ellipse at 70% 50%, #32a5d7 0%, transparent 70%)"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <div>
+        <span class="reveal text-primary text-sm font-bold uppercase tracking-[0.15em]">Por qué elegirnos</span>
+        <h2 class="reveal mt-3 text-3xl sm:text-4xl font-black text-lt-text dark:text-dk-text">
+          Comprometidos con la<br>excelencia en cada detalle
+        </h2>
+        <p class="reveal mt-5 text-accent leading-relaxed">
+          Más de dos décadas de experiencia nos respaldan. Nuestro equipo altamente calificado
+          se mantiene a la vanguardia para brindarte el mejor servicio.
+        </p>
+
+        <div class="reveal mt-10 space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">workspace_premium</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-lt-text dark:text-dk-text">20 años de experiencia</h4>
+              <p class="text-accent text-sm mt-1">Como Contadores y Consultores de Negocios, con trayectoria comprobada en el mercado.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">devices</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-lt-text dark:text-dk-text">Tecnología de punta</h4>
+              <p class="text-accent text-sm mt-1">Equipos y software de última generación para optimizar cada proceso contable.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">trending_up</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-lt-text dark:text-dk-text">Mejora continua</h4>
+              <p class="text-accent text-sm mt-1">Buscamos constantemente la mejora de nuestros procesos y sistemas, manteniéndonos a la vanguardia.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">group</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-lt-text dark:text-dk-text">Personal altamente calificado</h4>
+              <p class="text-accent text-sm mt-1">Actualización constante en las diversas áreas de servicio y consultoría.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="reveal relative">
+        <div class="rounded-2xl overflow-hidden shadow-2xl">
+          <img src="img/landing_about.jpg" alt="Por qué Treviso"
+               class="w-full h-[500px] object-cover object-center"/>
+        </div>
+        <div class="absolute -top-5 -left-5 hidden lg:block">
+          <div class="bg-lt-surface dark:bg-dk-surface border border-lt-border dark:border-dk-border
+                      rounded-2xl shadow-xl p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-green-500/15 text-green-500 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[20px]">verified</span>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-lt-text dark:text-dk-text">Firma certificada</p>
+              <p class="text-[11px] text-accent">Toluca, México</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CONTACTO ═══════════════════════════ -->
+<section id="contacto" class="py-24 bg-lt-surface dark:bg-dk-surface">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+      <!-- Info -->
+      <div>
+        <span class="reveal text-primary text-sm font-bold uppercase tracking-[0.15em]">Contáctanos</span>
+        <h2 class="reveal mt-3 text-3xl sm:text-4xl font-black text-lt-text dark:text-dk-text">
+          ¿Listo para mejorar tu<br>situación fiscal?
+        </h2>
+        <p class="reveal mt-5 text-accent leading-relaxed">
+          Contáctanos hoy mismo. Nuestro equipo de profesionales está listo para analizar
+          tu situación y ofrecerte la mejor solución.
+        </p>
+
+        <div class="reveal mt-10 space-y-5">
+          <a href="tel:7222374699"
+             class="flex items-center gap-4 p-4 rounded-xl border border-lt-border dark:border-dk-border
+                    bg-lt-bg dark:bg-dk-bg hover:border-primary/40 transition-colors group">
+            <div class="w-10 h-10 rounded-xl bg-primary/15 text-primary flex items-center justify-center flex-shrink-0
+                        group-hover:bg-primary group-hover:text-white transition-colors">
+              <span class="material-symbols-outlined text-[20px]">call</span>
+            </div>
+            <div>
+              <p class="text-xs text-accent font-medium">Teléfono</p>
+              <p class="text-sm font-bold text-lt-text dark:text-dk-text">722 237 4699</p>
+            </div>
+          </a>
+
+          <a href="mailto:comunicacion@treviso.com.mx"
+             class="flex items-center gap-4 p-4 rounded-xl border border-lt-border dark:border-dk-border
+                    bg-lt-bg dark:bg-dk-bg hover:border-primary/40 transition-colors group">
+            <div class="w-10 h-10 rounded-xl bg-primary/15 text-primary flex items-center justify-center flex-shrink-0
+                        group-hover:bg-primary group-hover:text-white transition-colors">
+              <span class="material-symbols-outlined text-[20px]">mail</span>
+            </div>
+            <div>
+              <p class="text-xs text-accent font-medium">Correo electrónico</p>
+              <p class="text-sm font-bold text-lt-text dark:text-dk-text">comunicacion@treviso.com.mx</p>
+            </div>
+          </a>
+
+          <div class="flex items-center gap-4 p-4 rounded-xl border border-lt-border dark:border-dk-border
+                      bg-lt-bg dark:bg-dk-bg">
+            <div class="w-10 h-10 rounded-xl bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">location_on</span>
+            </div>
+            <div>
+              <p class="text-xs text-accent font-medium">Ubicación</p>
+              <p class="text-sm font-bold text-lt-text dark:text-dk-text">Toluca, Estado de México</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="reveal">
+        <div class="rounded-2xl border border-lt-border dark:border-dk-border
+                    bg-lt-bg dark:bg-dk-bg p-8">
+          <h3 class="text-xl font-bold text-lt-text dark:text-dk-text mb-6">Envíanos un mensaje</h3>
+          <form id="contactForm" class="space-y-4" onsubmit="sendForm(event)">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <label class="flex flex-col gap-1.5">
+                <span class="text-xs font-semibold text-accent uppercase tracking-wide">Nombre</span>
+                <input type="text" name="nombre" required placeholder="Tu nombre"
+                       class="form-input w-full h-10 px-3 rounded-lg text-sm
+                              bg-lt-surface dark:bg-dk-input border border-lt-border dark:border-dk-border
+                              text-lt-text dark:text-dk-text placeholder:text-accent
+                              focus:ring-2 focus:ring-primary/40 focus:border-primary focus:outline-none transition-colors"/>
+              </label>
+              <label class="flex flex-col gap-1.5">
+                <span class="text-xs font-semibold text-accent uppercase tracking-wide">Apellido</span>
+                <input type="text" name="apellido" placeholder="Tu apellido"
+                       class="form-input w-full h-10 px-3 rounded-lg text-sm
+                              bg-lt-surface dark:bg-dk-input border border-lt-border dark:border-dk-border
+                              text-lt-text dark:text-dk-text placeholder:text-accent
+                              focus:ring-2 focus:ring-primary/40 focus:border-primary focus:outline-none transition-colors"/>
+              </label>
+            </div>
+            <label class="flex flex-col gap-1.5">
+              <span class="text-xs font-semibold text-accent uppercase tracking-wide">Correo electrónico</span>
+              <input type="email" name="email" required placeholder="tu@correo.com"
+                     class="form-input w-full h-10 px-3 rounded-lg text-sm
+                            bg-lt-surface dark:bg-dk-input border border-lt-border dark:border-dk-border
+                            text-lt-text dark:text-dk-text placeholder:text-accent
+                            focus:ring-2 focus:ring-primary/40 focus:border-primary focus:outline-none transition-colors"/>
+            </label>
+            <label class="flex flex-col gap-1.5">
+              <span class="text-xs font-semibold text-accent uppercase tracking-wide">Teléfono</span>
+              <input type="tel" name="telefono" placeholder="722 000 0000"
+                     class="form-input w-full h-10 px-3 rounded-lg text-sm
+                            bg-lt-surface dark:bg-dk-input border border-lt-border dark:border-dk-border
+                            text-lt-text dark:text-dk-text placeholder:text-accent
+                            focus:ring-2 focus:ring-primary/40 focus:border-primary focus:outline-none transition-colors"/>
+            </label>
+            <label class="flex flex-col gap-1.5">
+              <span class="text-xs font-semibold text-accent uppercase tracking-wide">Mensaje</span>
+              <textarea name="mensaje" rows="4" required placeholder="¿En qué podemos ayudarte?"
+                        class="form-textarea w-full px-3 py-2 rounded-lg text-sm resize-none
+                               bg-lt-surface dark:bg-dk-input border border-lt-border dark:border-dk-border
+                               text-lt-text dark:text-dk-text placeholder:text-accent
+                               focus:ring-2 focus:ring-primary/40 focus:border-primary focus:outline-none transition-colors"></textarea>
+            </label>
+            <button type="submit" id="submitBtn"
+                    class="w-full h-11 rounded-lg bg-primary hover:bg-primary-hover text-white
+                           font-bold text-sm transition-colors flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">send</span>
+              Enviar mensaje
+            </button>
+            <p id="formMsg" class="hidden text-center text-sm text-green-500 font-medium pt-1">
+              ¡Gracias por contactarnos! Te responderemos pronto.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer class="bg-dk-bg border-t border-dk-border py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+
+      <!-- Logo -->
+      <div class="flex flex-col items-center md:items-start gap-3">
+        <span class="inline-flex items-center rounded-lg px-3 py-1.5 bg-[#1e7ea1]">
+          <img src="img/logo_treviso.png" alt="Treviso" class="h-7 w-auto object-contain">
+        </span>
+        <p class="text-accent text-xs">© 2025 Treviso · Toluca, México</p>
+      </div>
+
+      <!-- Links -->
+      <div class="flex flex-wrap justify-center gap-6 text-sm text-accent">
+        <a href="#inicio"    class="hover:text-primary transition-colors">Inicio</a>
+        <a href="#nosotros"  class="hover:text-primary transition-colors">Nosotros</a>
+        <a href="#servicios" class="hover:text-primary transition-colors">Servicios</a>
+        <a href="#contacto"  class="hover:text-primary transition-colors">Contacto</a>
+        <a href="http://192.168.1.200/TREVISO/espaciotreviso/public/"     class="hover:text-primary transition-colors">Espacio Treviso</a>
+      </div>
+
+      <!-- Social / contact -->
+      <div class="flex items-center gap-3">
+        <a href="tel:7222374699"
+           class="w-9 h-9 rounded-lg bg-dk-surface border border-dk-border text-accent
+                  hover:text-primary hover:border-primary/40 flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-[18px]">call</span>
+        </a>
+        <a href="mailto:comunicacion@treviso.com.mx"
+           class="w-9 h-9 rounded-lg bg-dk-surface border border-dk-border text-accent
+                  hover:text-primary hover:border-primary/40 flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-[18px]">mail</span>
+        </a>
+        <a href="https://wa.me/527222374699" target="_blank" rel="noopener"
+           class="w-9 h-9 rounded-lg bg-dk-surface border border-dk-border text-accent
+                  hover:text-green-400 hover:border-green-400/40 flex items-center justify-center transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════ FLOATING CONTACT ═══════════════════════ -->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3" id="floatContact">
+
+  <!-- Options (hidden by default) -->
+  <div id="floatOptions" class="flex flex-col items-end gap-2.5
+                                 opacity-0 pointer-events-none translate-y-4
+                                 transition-all duration-300 ease-out">
+
+    <!-- Email -->
+    <div class="flex items-center gap-3 group">
+      <span class="hidden sm:block px-3 py-1.5 rounded-xl text-xs font-semibold
+                   bg-dk-surface/95 dark:bg-dk-surface/95 text-dk-text
+                   border border-dk-border shadow-lg backdrop-blur-md
+                   opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0
+                   transition-all duration-200 whitespace-nowrap select-none">
+        comunicacion@treviso.com.mx
+      </span>
+      <a href="mailto:comunicacion@treviso.com.mx"
+         class="w-12 h-12 rounded-full bg-lt-surface dark:bg-dk-surface
+                border border-lt-border dark:border-dk-border shadow-xl
+                text-accent hover:text-primary hover:border-primary/50
+                flex items-center justify-center transition-all duration-200
+                hover:scale-110 hover:shadow-primary/20">
+        <span class="material-symbols-outlined text-[22px]">mail</span>
+      </a>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="flex items-center gap-3 group">
+      <span class="hidden sm:block px-3 py-1.5 rounded-xl text-xs font-semibold
+                   bg-dk-surface/95 dark:bg-dk-surface/95 text-dk-text
+                   border border-dk-border shadow-lg backdrop-blur-md
+                   opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0
+                   transition-all duration-200 whitespace-nowrap select-none">
+        722 237 4699
+      </span>
+      <a href="tel:7222374699"
+         class="w-12 h-12 rounded-full bg-lt-surface dark:bg-dk-surface
+                border border-lt-border dark:border-dk-border shadow-xl
+                text-accent hover:text-primary hover:border-primary/50
+                flex items-center justify-center transition-all duration-200
+                hover:scale-110 hover:shadow-primary/20">
+        <span class="material-symbols-outlined text-[22px]">call</span>
+      </a>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="flex items-center gap-3 group">
+      <span class="hidden sm:block px-3 py-1.5 rounded-xl text-xs font-semibold
+                   bg-dk-surface/95 dark:bg-dk-surface/95 text-dk-text
+                   border border-dk-border shadow-lg backdrop-blur-md
+                   opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0
+                   transition-all duration-200 whitespace-nowrap select-none">
+        Escríbenos por WhatsApp
+      </span>
+      <a href="https://wa.me/527222374699" target="_blank" rel="noopener"
+         class="w-12 h-12 rounded-full bg-[#25d366] hover:bg-[#1ebe5d] shadow-xl
+                text-white flex items-center justify-center transition-all duration-200
+                hover:scale-110 hover:shadow-[0_8px_24px_rgba(37,211,102,0.45)]">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main toggle button -->
+  <button onclick="toggleFloat()" id="floatBtn"
+          class="w-14 h-14 rounded-full bg-primary hover:bg-primary-hover text-white shadow-2xl
+                 shadow-primary/40 flex items-center justify-center transition-all duration-300
+                 hover:scale-110 focus:outline-none relative overflow-hidden">
+    <!-- Cycling icons (visible when closed) -->
+    <span id="floatIconWrap" class="absolute inset-0 flex items-center justify-center transition-all duration-300">
+      <!-- WhatsApp -->
+      <span class="float-cycle absolute inset-0 flex items-center justify-center transition-all duration-500" data-idx="0">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+      </span>
+      <!-- Phone -->
+      <span class="float-cycle absolute inset-0 flex items-center justify-center transition-all duration-500 opacity-0 scale-50" data-idx="1">
+        <span class="material-symbols-outlined text-[26px]">call</span>
+      </span>
+      <!-- Email -->
+      <span class="float-cycle absolute inset-0 flex items-center justify-center transition-all duration-500 opacity-0 scale-50" data-idx="2">
+        <span class="material-symbols-outlined text-[26px]">mail</span>
+      </span>
+    </span>
+    <!-- Close icon (visible when open) -->
+    <span id="floatCloseIcon"
+          class="absolute inset-0 flex items-center justify-center
+                 opacity-0 scale-50 transition-all duration-300 pointer-events-none">
+      <span class="material-symbols-outlined text-[26px]">close</span>
+    </span>
+  </button>
+</div>
+
+<!-- ═══════════════════════════ SCRIPTS ═══════════════════════════ -->
+<script>
+// ── Theme ────────────────────────────────────────────────────────
+function applyTheme(dark) {
+  var html = document.getElementById('htmlRoot');
+  var icon = document.getElementById('themeIcon');
+  html.classList.toggle('dark', dark);
+  if (icon) icon.textContent = dark ? 'light_mode' : 'dark_mode';
+}
+function toggleTheme() {
+  var isDark = document.getElementById('htmlRoot').classList.contains('dark');
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  applyTheme(!isDark);
+}
+(function(){ applyTheme(localStorage.getItem('theme') !== 'light'); })();
+
+// ── Navbar scroll style ───────────────────────────────────────────
+window.addEventListener('scroll', function() {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── Mobile menu ───────────────────────────────────────────────────
+function toggleMobileMenu() {
+  var m = document.getElementById('mobileMenu');
+  m.classList.toggle('hidden');
+}
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.add('hidden');
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────────
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+// ── Floating contact — cycling icons + toggle ─────────────────────
+var floatOpen    = false;
+var floatCurrent = 0;
+var floatTimer   = null;
+var floatIcons   = document.querySelectorAll('.float-cycle');
+
+function floatShowIcon(idx) {
+  floatIcons.forEach(function(el, i) {
+    if (i === idx) {
+      el.classList.remove('opacity-0','scale-50');
+      el.classList.add('opacity-100','scale-100');
+    } else {
+      el.classList.remove('opacity-100','scale-100');
+      el.classList.add('opacity-0','scale-50');
+    }
+  });
+}
+
+function floatStartCycle() {
+  floatShowIcon(floatCurrent);
+  floatTimer = setInterval(function() {
+    floatCurrent = (floatCurrent + 1) % floatIcons.length;
+    floatShowIcon(floatCurrent);
+  }, 2200);
+}
+
+function floatStopCycle() {
+  clearInterval(floatTimer);
+  floatTimer = null;
+}
+
+function toggleFloat() {
+  floatOpen = !floatOpen;
+  var opts      = document.getElementById('floatOptions');
+  var iconWrap  = document.getElementById('floatIconWrap');
+  var closeIcon = document.getElementById('floatCloseIcon');
+
+  if (floatOpen) {
+    floatStopCycle();
+    // Hide cycling icons, show X
+    iconWrap.classList.add('opacity-0','scale-50');
+    iconWrap.classList.remove('opacity-100','scale-100');
+    closeIcon.classList.remove('opacity-0','scale-50','pointer-events-none');
+    closeIcon.classList.add('opacity-100','scale-100');
+    // Show options
+    opts.classList.remove('opacity-0','pointer-events-none','translate-y-4');
+    opts.classList.add('opacity-100','pointer-events-auto','translate-y-0');
+  } else {
+    // Show cycling icons, hide X
+    iconWrap.classList.remove('opacity-0','scale-50');
+    iconWrap.classList.add('opacity-100','scale-100');
+    closeIcon.classList.add('opacity-0','scale-50','pointer-events-none');
+    closeIcon.classList.remove('opacity-100','scale-100');
+    // Hide options
+    opts.classList.add('opacity-0','pointer-events-none','translate-y-4');
+    opts.classList.remove('opacity-100','pointer-events-auto','translate-y-0');
+    floatStartCycle();
+  }
+}
+
+// Close on outside click
+document.addEventListener('click', function(e) {
+  if (floatOpen && !document.getElementById('floatContact').contains(e.target)) {
+    toggleFloat();
+  }
+});
+
+// Start cycling on load
+floatStartCycle();
+
+// ── Contact form (mailto fallback) ───────────────────────────────
+function sendForm(e) {
+  e.preventDefault();
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> Enviando...';
+  // Simulate send — in production connect to a backend
+  setTimeout(function() {
+    document.getElementById('contactForm').reset();
+    document.getElementById('formMsg').classList.remove('hidden');
+    btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span> Enviado';
+  }, 1200);
+}
+</script>
+</body>
+</html>
